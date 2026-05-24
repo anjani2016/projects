@@ -73,7 +73,7 @@ jobs:
       - name: Run Python Test Suite
         id: run-python-tests
         if: matrix.lang == 'python'
-        run: python -m pytest tests/unit/
+        run: python -m pytest
         continue-on-error: true
 
       - name: Run TypeScript Test Suite
@@ -90,7 +90,8 @@ jobs:
         with:
           jules_api_key: ${{ secrets.JULES_API_KEY }}
           starting_branch: ${{ github.ref_name }}
-          working_directory: ./${{ matrix.project }} 
+          include_last_commit: "false"
+          include_commit_log: "false"
           prompt: |
             The local CI verification execution has failed inside the ${{ matrix.lang }} subproject directory: "./${{ matrix.project }}".
             
