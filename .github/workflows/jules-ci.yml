@@ -86,7 +86,7 @@ jobs:
       - name: Invoke Jules Auto-Healer
         # Trigger if EITHER the python test lane OR the typescript test lane fails
         if: steps.run-python-tests.outcome == 'failure' || steps.run-ts-tests.outcome == 'failure'
-        uses: google-labs-code/jules-invoke@v1
+        uses: google-labs-code/jules-invoke@main
         with:
           jules_api_key: ${{ secrets.JULES_API_KEY }}
           starting_branch: ${{ github.ref_name }}
