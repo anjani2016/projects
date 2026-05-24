@@ -1,0 +1,5 @@
+region,peak_demand_mw_2026,available_capacity_mw,growth_scenario
+York,4200,5000,High
+Toronto,5100,5500,Reference
+Ottawa,1800,2200,Reference
+Niagara,1200,1500,Low

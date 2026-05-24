@@ -1,0 +1,126 @@
+{
+  "2021": {
+    "source": "synthetic",
+    "cached_at": "2026-05-23T18:03:03.767568"
+  },
+  "2022": {
+    "source": "synthetic",
+    "cached_at": "2026-05-23T18:03:03.771954"
+  },
+  "2023": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:31.734304"
+  },
+  "2024": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:34:35.116255"
+  },
+  "2025": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:38:46.956211"
+  },
+  "2026": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:38:47.401713"
+  },
+  "2020": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:30.460287"
+  },
+  "2000": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:40:02.659580"
+  },
+  "2003": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:19.923920"
+  },
+  "2004": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:20.664995"
+  },
+  "2005": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:21.399889"
+  },
+  "2006": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:22.417128"
+  },
+  "2007": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:23.239108"
+  },
+  "2008": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:23.949226"
+  },
+  "2009": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:24.667650"
+  },
+  "2010": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:25.383783"
+  },
+  "2011": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:26.156586"
+  },
+  "2012": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:26.879594"
+  },
+  "2013": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:27.296063"
+  },
+  "2014": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:27.755008"
+  },
+  "2015": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:28.172215"
+  },
+  "2016": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:28.623914"
+  },
+  "2017": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:29.045617"
+  },
+  "2018": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:29.462064"
+  },
+  "2019": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:30.037253"
+  },
+  "1996": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:39:59.167055"
+  },
+  "1997": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:40:00.005324"
+  },
+  "1998": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:40:00.827488"
+  },
+  "1999": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:40:01.946942"
+  },
+  "2001": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:40:03.585849"
+  },
+  "2002": {
+    "source": "environment_canada",
+    "cached_at": "2026-05-23T09:40:04.300310"
+  }
+}

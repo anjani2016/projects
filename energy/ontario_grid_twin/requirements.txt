@@ -1,0 +1,28 @@
+duckdb
+lonboard
+
+scipy
+requests
+
+# Web Framework
+streamlit>=1.30.0
+
+# Geospatial Visualization
+pydeck>=0.8.0
+geopandas>=0.14.0
+
+# Data Management & Parquet Support
+pandas>=2.0.0
+pyarrow>=14.0.0
+fiona>=1.9.0
+shapely>=2.0.0
+
+# Mathematical Simulations
+numpy>=1.24.0
+
+
+pyogrio
+pydeck
+plotly
+
+tabulate

@@ -1,0 +1,5 @@
+libgdal-dev
+gdal-bin
+python3-dev
+build-essential
+libspatialindex-dev

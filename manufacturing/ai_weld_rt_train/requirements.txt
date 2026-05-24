@@ -1,0 +1,13 @@
+ultralytics
+opencv-python-headless
+torch
+huggingface_hub
+numpy
+pandas
+streamlit
+reportlab
+pydantic
+grad-cam
+matplotlib
+watchdog
+python-dotenv

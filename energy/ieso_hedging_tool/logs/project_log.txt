@@ -1,0 +1,551 @@
+2026-05-02 15:19:26,123 - INFO - Project directories initialized.
+2026-05-02 15:19:47,725 - INFO - Project directories initialized.
+2026-05-02 15:20:06,651 - INFO - Project directories initialized.
+2026-05-02 15:32:01,417 - INFO - Project directories initialized.
+2026-05-02 15:32:14,281 - INFO - Project directories initialized.
+2026-05-02 15:32:16,458 - INFO - Project directories initialized.
+2026-05-04 13:05:15,653 - INFO - Project directories initialized.
+2026-05-04 13:05:19,250 - INFO - Project directories initialized.
+2026-05-04 13:05:21,609 - INFO - Project directories initialized.
+2026-05-04 13:05:21,617 - INFO - Project directories initialized.
+2026-05-04 13:05:24,950 - INFO - Project directories initialized.
+2026-05-04 13:05:25,812 - INFO - Project directories initialized.
+2026-05-04 13:05:31,899 - INFO - Project directories initialized.
+2026-05-04 13:05:48,653 - INFO - Project directories initialized.
+2026-05-04 13:16:05,489 - INFO - Project directories initialized.
+2026-05-04 13:16:06,072 - INFO - Project directories initialized.
+2026-05-04 13:16:09,978 - INFO - Project directories initialized.
+2026-05-04 13:16:09,984 - INFO - Project directories initialized.
+2026-05-04 13:16:22,707 - INFO - Project directories initialized.
+2026-05-04 13:16:24,091 - INFO - Project directories initialized.
+2026-05-04 13:16:25,538 - INFO - Project directories initialized.
+2026-05-04 13:16:25,542 - INFO - Project directories initialized.
+2026-05-04 13:16:27,291 - INFO - Project directories initialized.
+2026-05-04 13:16:27,294 - INFO - Project directories initialized.
+2026-05-04 13:16:27,324 - INFO - Project directories initialized.
+2026-05-04 13:16:27,326 - INFO - Project directories initialized.
+2026-05-04 13:45:14,738 - INFO - Project directories initialized.
+2026-05-04 13:45:14,763 - INFO - Project directories initialized.
+2026-05-04 13:45:16,541 - INFO - Project directories initialized.
+2026-05-04 13:45:16,545 - INFO - Project directories initialized.
+2026-05-04 13:47:39,239 - INFO - Project directories initialized.
+2026-05-04 13:47:42,656 - INFO - Project directories initialized.
+2026-05-04 13:47:42,660 - INFO - Project directories initialized.
+2026-05-04 13:47:49,745 - INFO - Project directories initialized.
+2026-05-04 13:47:49,755 - INFO - Project directories initialized.
+2026-05-04 13:54:57,662 - INFO - Project directories initialized.
+2026-05-04 13:55:02,187 - INFO - Project directories initialized.
+2026-05-04 13:55:02,198 - INFO - Project directories initialized.
+2026-05-04 13:55:04,353 - INFO - Project directories initialized.
+2026-05-04 13:55:04,358 - INFO - Project directories initialized.
+2026-05-04 13:55:11,276 - INFO - Project directories initialized.
+2026-05-04 13:55:11,284 - INFO - Project directories initialized.
+2026-05-04 13:55:50,296 - INFO - Project directories initialized.
+2026-05-04 13:55:50,313 - INFO - Project directories initialized.
+2026-05-04 13:55:52,561 - INFO - Project directories initialized.
+2026-05-04 13:55:57,008 - INFO - Project directories initialized.
+2026-05-04 13:56:00,137 - INFO - Project directories initialized.
+2026-05-04 13:56:01,064 - INFO - Project directories initialized.
+2026-05-04 13:56:01,067 - INFO - Project directories initialized.
+2026-05-04 13:56:01,830 - INFO - Project directories initialized.
+2026-05-04 13:56:01,834 - INFO - Project directories initialized.
+2026-05-04 14:03:13,792 - INFO - Project directories initialized.
+2026-05-04 14:03:24,310 - INFO - Project directories initialized.
+2026-05-04 14:03:32,053 - INFO - Project directories initialized.
+2026-05-04 14:03:49,767 - INFO - Project directories initialized.
+2026-05-04 14:23:10,808 - INFO - Project directories initialized.
+2026-05-04 14:23:25,339 - INFO - Project directories initialized.
+2026-05-04 14:23:26,112 - INFO - Project directories initialized.
+2026-05-04 14:23:28,974 - INFO - Project directories initialized.
+2026-05-04 14:23:29,042 - INFO - Project directories initialized.
+2026-05-04 14:25:34,670 - INFO - Project directories initialized.
+2026-05-04 14:25:34,698 - INFO - Project directories initialized.
+2026-05-04 14:25:36,995 - INFO - Project directories initialized.
+2026-05-04 14:28:05,112 - INFO - Project directories initialized.
+2026-05-04 14:28:26,260 - INFO - Project directories initialized.
+2026-05-04 14:28:26,267 - INFO - Project directories initialized.
+2026-05-04 14:28:27,763 - INFO - Project directories initialized.
+2026-05-04 14:28:27,770 - INFO - Project directories initialized.
+2026-05-04 14:29:30,396 - INFO - Project directories initialized.
+2026-05-04 14:29:33,862 - INFO - Project directories initialized.
+2026-05-04 14:29:51,416 - INFO - Project directories initialized.
+2026-05-04 14:29:51,420 - INFO - Project directories initialized.
+2026-05-04 14:30:21,975 - INFO - Project directories initialized.
+2026-05-04 14:30:22,105 - INFO - Project directories initialized.
+2026-05-04 14:30:25,886 - INFO - Project directories initialized.
+2026-05-04 14:56:36,548 - INFO - Project directories initialized.
+2026-05-04 14:56:38,508 - INFO - Project directories initialized.
+2026-05-04 14:56:41,120 - INFO - Project directories initialized.
+2026-05-04 14:56:43,020 - INFO - Project directories initialized.
+2026-05-04 14:56:43,033 - INFO - Project directories initialized.
+2026-05-04 14:56:45,175 - INFO - Project directories initialized.
+2026-05-04 15:14:09,663 - INFO - Project directories initialized.
+2026-05-04 15:14:11,554 - INFO - Project directories initialized.
+2026-05-04 15:14:13,141 - INFO - Project directories initialized.
+2026-05-04 15:14:13,146 - INFO - Project directories initialized.
+2026-05-04 15:14:15,740 - INFO - Project directories initialized.
+2026-05-04 15:14:18,797 - INFO - Project directories initialized.
+2026-05-04 15:14:22,030 - INFO - Project directories initialized.
+2026-05-04 15:14:22,871 - INFO - Project directories initialized.
+2026-05-04 15:14:22,873 - INFO - Project directories initialized.
+2026-05-04 15:43:35,328 - INFO - Project directories initialized.
+2026-05-04 15:43:35,345 - INFO - Project directories initialized.
+2026-05-04 15:43:37,459 - INFO - Project directories initialized.
+2026-05-04 15:43:40,132 - INFO - Project directories initialized.
+2026-05-04 15:43:49,471 - INFO - Project directories initialized.
+2026-05-04 15:43:53,279 - INFO - Project directories initialized.
+2026-05-04 15:44:08,518 - INFO - Project directories initialized.
+2026-05-04 15:44:08,523 - INFO - Project directories initialized.
+2026-05-04 15:44:10,251 - INFO - Project directories initialized.
+2026-05-04 15:44:10,254 - INFO - Project directories initialized.
+2026-05-04 15:45:15,439 - INFO - Project directories initialized.
+2026-05-04 15:45:18,046 - INFO - Project directories initialized.
+2026-05-04 15:47:12,822 - INFO - Project directories initialized.
+2026-05-04 15:47:18,281 - INFO - Project directories initialized.
+2026-05-04 15:47:20,636 - INFO - Project directories initialized.
+2026-05-04 15:47:24,653 - INFO - Project directories initialized.
+2026-05-04 15:47:28,007 - INFO - Project directories initialized.
+2026-05-04 15:47:31,230 - INFO - Project directories initialized.
+2026-05-04 15:49:09,839 - INFO - Project directories initialized.
+2026-05-04 15:49:27,145 - INFO - Project directories initialized.
+2026-05-04 15:49:31,554 - INFO - Project directories initialized.
+2026-05-04 15:49:36,979 - INFO - Project directories initialized.
+2026-05-04 15:49:39,587 - INFO - Project directories initialized.
+2026-05-04 15:49:45,831 - INFO - Project directories initialized.
+2026-05-04 15:49:50,820 - INFO - Project directories initialized.
+2026-05-04 15:51:15,600 - INFO - Project directories initialized.
+2026-05-04 15:51:15,985 - INFO - Project directories initialized.
+2026-05-04 15:51:20,878 - INFO - Project directories initialized.
+2026-05-04 15:53:23,479 - INFO - Project directories initialized.
+2026-05-04 15:53:23,732 - INFO - Project directories initialized.
+2026-05-04 15:53:37,941 - INFO - Project directories initialized.
+2026-05-04 15:53:46,452 - INFO - Project directories initialized.
+2026-05-04 15:53:48,253 - INFO - Project directories initialized.
+2026-05-04 15:53:48,423 - INFO - Project directories initialized.
+2026-05-04 15:53:49,576 - INFO - Project directories initialized.
+2026-05-04 15:53:50,322 - INFO - Project directories initialized.
+2026-05-04 15:54:33,136 - INFO - Project directories initialized.
+2026-05-04 15:57:00,864 - INFO - Project directories initialized.
+2026-05-04 15:59:00,020 - INFO - Project directories initialized.
+2026-05-04 15:59:00,324 - INFO - Project directories initialized.
+2026-05-04 15:59:23,824 - INFO - Project directories initialized.
+2026-05-04 15:59:31,249 - INFO - Project directories initialized.
+2026-05-04 15:59:34,470 - INFO - Project directories initialized.
+2026-05-04 15:59:44,955 - INFO - Project directories initialized.
+2026-05-04 15:59:53,198 - INFO - Project directories initialized.
+2026-05-04 15:59:57,843 - INFO - Project directories initialized.
+2026-05-04 16:00:34,854 - INFO - Project directories initialized.
+2026-05-04 16:00:37,383 - INFO - Project directories initialized.
+2026-05-04 16:00:39,909 - INFO - Project directories initialized.
+2026-05-04 16:00:40,854 - INFO - Project directories initialized.
+2026-05-04 16:00:42,539 - INFO - Project directories initialized.
+2026-05-04 16:03:10,167 - INFO - Project directories initialized.
+2026-05-04 16:03:13,223 - INFO - Project directories initialized.
+2026-05-04 16:03:15,615 - INFO - Project directories initialized.
+2026-05-04 16:03:18,040 - INFO - Project directories initialized.
+2026-05-04 16:04:41,184 - INFO - Project directories initialized.
+2026-05-04 16:04:45,374 - INFO - Project directories initialized.
+2026-05-04 16:04:48,657 - INFO - Project directories initialized.
+2026-05-04 16:04:51,945 - INFO - Project directories initialized.
+2026-05-04 16:05:08,453 - INFO - Project directories initialized.
+2026-05-04 16:05:12,403 - INFO - Project directories initialized.
+2026-05-04 16:05:15,569 - INFO - Project directories initialized.
+2026-05-04 16:05:17,852 - INFO - Project directories initialized.
+2026-05-04 16:05:20,018 - INFO - Project directories initialized.
+2026-05-04 16:05:40,999 - INFO - Project directories initialized.
+2026-05-04 16:05:52,047 - INFO - Project directories initialized.
+2026-05-04 16:06:51,322 - INFO - Project directories initialized.
+2026-05-04 16:06:55,923 - INFO - Project directories initialized.
+2026-05-04 16:07:10,483 - INFO - Project directories initialized.
+2026-05-04 16:07:19,252 - INFO - Project directories initialized.
+2026-05-04 16:07:23,332 - INFO - Project directories initialized.
+2026-05-04 16:07:27,744 - INFO - Project directories initialized.
+2026-05-04 16:07:42,660 - INFO - Project directories initialized.
+2026-05-04 16:07:45,739 - INFO - Project directories initialized.
+2026-05-04 16:07:47,874 - INFO - Project directories initialized.
+2026-05-04 16:09:53,327 - INFO - Project directories initialized.
+2026-05-04 16:09:55,814 - INFO - Project directories initialized.
+2026-05-04 16:11:25,702 - INFO - Project directories initialized.
+2026-05-04 16:11:29,542 - INFO - Project directories initialized.
+2026-05-04 16:12:35,330 - INFO - Project directories initialized.
+2026-05-04 16:12:38,012 - INFO - Project directories initialized.
+2026-05-04 16:12:45,958 - INFO - Project directories initialized.
+2026-05-04 16:12:47,125 - INFO - Project directories initialized.
+2026-05-04 16:13:05,547 - INFO - Project directories initialized.
+2026-05-04 16:13:06,828 - INFO - Project directories initialized.
+2026-05-04 16:14:15,430 - INFO - Project directories initialized.
+2026-05-04 16:14:17,131 - INFO - Project directories initialized.
+2026-05-04 16:14:29,468 - INFO - Project directories initialized.
+2026-05-04 16:14:31,363 - INFO - Project directories initialized.
+2026-05-04 16:14:32,135 - INFO - Project directories initialized.
+2026-05-04 16:14:47,661 - INFO - Project directories initialized.
+2026-05-04 16:14:47,852 - INFO - Project directories initialized.
+2026-05-04 16:15:02,740 - INFO - Project directories initialized.
+2026-05-04 16:15:06,620 - INFO - Project directories initialized.
+2026-05-04 16:15:13,901 - INFO - Project directories initialized.
+2026-05-04 16:15:18,700 - INFO - Project directories initialized.
+2026-05-04 16:15:18,815 - INFO - Project directories initialized.
+2026-05-04 16:15:27,174 - INFO - Project directories initialized.
+2026-05-04 16:15:28,995 - INFO - Project directories initialized.
+2026-05-04 16:15:30,922 - INFO - Project directories initialized.
+2026-05-07 15:07:43,004 - INFO - Project directories initialized.
+2026-05-07 15:08:00,616 - INFO - Project directories initialized.
+2026-05-07 15:10:33,895 - INFO - Project directories initialized.
+2026-05-07 15:10:35,483 - INFO - Project directories initialized.
+2026-05-07 15:13:59,485 - INFO - Project directories initialized.
+2026-05-07 15:14:11,342 - INFO - Project directories initialized.
+2026-05-07 15:14:49,976 - INFO - Project directories initialized.
+2026-05-07 15:14:52,872 - INFO - Project directories initialized.
+2026-05-07 15:14:55,146 - INFO - Project directories initialized.
+2026-05-07 15:29:33,567 - INFO - Project directories initialized.
+2026-05-07 15:29:35,203 - INFO - Project directories initialized.
+2026-05-07 15:41:03,306 - INFO - Project directories initialized.
+2026-05-07 15:48:20,403 - INFO - Project directories initialized.
+2026-05-07 16:04:24,277 - INFO - Project directories initialized.
+2026-05-07 16:05:10,511 - INFO - Project directories initialized.
+2026-05-07 16:08:49,818 - INFO - Project directories initialized.
+2026-05-07 21:10:07,714 - INFO - Project directories initialized.
+2026-05-07 21:36:37,029 - INFO - Project directories initialized.
+2026-05-07 21:36:42,625 - INFO - Project directories initialized.
+2026-05-07 21:37:28,039 - INFO - Project directories initialized.
+2026-05-07 21:38:45,935 - INFO - Project directories initialized.
+2026-05-07 21:39:23,986 - INFO - Project directories initialized.
+2026-05-07 21:39:53,609 - INFO - Project directories initialized.
+2026-05-21 19:45:44,326 - INFO - Project directories initialized.
+2026-05-21 19:45:49,633 - INFO - Project directories initialized.
+2026-05-21 19:46:10,274 - INFO - Project directories initialized.
+2026-05-21 19:50:46,121 - INFO - Project directories initialized.
+2026-05-21 20:17:47,652 - INFO - Project directories initialized.
+2026-05-21 20:19:37,346 - INFO - Project directories initialized.
+2026-05-21 20:20:21,332 - INFO - Project directories initialized.
+2026-05-21 20:20:25,624 - INFO - Project directories initialized.
+2026-05-21 20:20:33,245 - INFO - Project directories initialized.
+2026-05-21 20:50:07,364 - INFO - Project directories initialized.
+2026-05-21 20:50:50,529 - INFO - Project directories initialized.
+2026-05-21 20:50:52,875 - INFO - Project directories initialized.
+2026-05-21 20:51:08,747 - INFO - Project directories initialized.
+2026-05-21 20:51:14,490 - INFO - Project directories initialized.
+2026-05-21 20:51:19,983 - INFO - Project directories initialized.
+2026-05-21 20:52:58,008 - INFO - Project directories initialized.
+2026-05-21 20:53:25,651 - INFO - Project directories initialized.
+2026-05-21 20:53:46,485 - INFO - Project directories initialized.
+2026-05-21 20:54:11,835 - INFO - Project directories initialized.
+2026-05-21 20:54:14,528 - INFO - Project directories initialized.
+2026-05-21 20:54:22,857 - INFO - Project directories initialized.
+2026-05-21 20:54:23,353 - INFO - Project directories initialized.
+2026-05-21 20:54:43,645 - INFO - Project directories initialized.
+2026-05-21 20:54:44,709 - INFO - Project directories initialized.
+2026-05-21 20:54:50,268 - INFO - Project directories initialized.
+2026-05-21 20:54:55,435 - INFO - Project directories initialized.
+2026-05-21 20:54:57,917 - INFO - Project directories initialized.
+2026-05-21 20:54:59,793 - INFO - Project directories initialized.
+2026-05-21 20:55:08,104 - INFO - Project directories initialized.
+2026-05-21 20:55:12,318 - INFO - Project directories initialized.
+2026-05-21 20:55:15,756 - INFO - Project directories initialized.
+2026-05-21 20:55:21,465 - INFO - Project directories initialized.
+2026-05-21 20:55:52,950 - INFO - Project directories initialized.
+2026-05-21 20:56:28,452 - INFO - Project directories initialized.
+2026-05-21 20:56:33,671 - INFO - Project directories initialized.
+2026-05-21 20:56:34,214 - INFO - Project directories initialized.
+2026-05-21 20:56:38,795 - INFO - Project directories initialized.
+2026-05-21 21:03:14,295 - INFO - Project directories initialized.
+2026-05-21 21:06:01,645 - INFO - Project directories initialized.
+2026-05-21 21:07:54,726 - INFO - Project directories initialized.
+2026-05-21 21:09:33,897 - INFO - Project directories initialized.
+2026-05-21 21:10:25,205 - INFO - Project directories initialized.
+2026-05-21 21:15:57,632 - INFO - Project directories initialized.
+2026-05-22 20:41:15,004 - INFO - Project directories initialized.
+2026-05-22 20:41:24,360 - INFO - Project directories initialized.
+2026-05-22 20:41:47,125 - INFO - Project directories initialized.
+2026-05-22 20:41:48,351 - INFO - Project directories initialized.
+2026-05-22 20:41:50,260 - INFO - Project directories initialized.
+[2026-05-22 20:53:14,270] INFO [ieso_hedging_tool:49] - Project directories and logging engine initialized.
+[2026-05-22 21:57:22,369] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:01:36,165] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:01:42,293] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:04:07,354] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:04:43,419] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:06:29,254] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:28:11,422] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:29:35,352] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:29:46,825] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:30:56,621] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:30:59,173] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:33:11,537] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:33:12,042] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:33:15,958] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:34:21,206] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:36:14,804] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:36:14,840] INFO [src.engines.ingestion_peakhours:28] - Fetching IESO real-time demand from: https://reports-public.ieso.ca/public/RealtimeDemandZonal/PUB_RealtimeDemandZonal.csv
+[2026-05-22 22:36:16,179] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:36:17,803] INFO [src.engines.ingestion_peakhours:58] - IESO demand fetch complete — 3384 hourly rows from 2026-01-01 00:00:00 to 2026-05-21 23:00:00
+[2026-05-22 22:49:54,372] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:50:03,041] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-22 22:50:49,747] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 08:52:06,442] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 08:52:08,888] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 08:52:10,179] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 08:52:48,609] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 08:53:21,529] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 08:55:04,785] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 08:55:14,255] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 08:57:28,525] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 08:57:52,295] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 08:58:46,022] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:12:19,229] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:15,175] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:16,237] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:20,468] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:21,282] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:21,702] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:23,237] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:31,121] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:36,489] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:44,168] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:47,405] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:47,806] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:47,962] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:49,084] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:49,337] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:50,114] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:52,121] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:25:59,844] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:26:11,460] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:26:16,067] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:26:18,607] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:26:19,421] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:26:24,045] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:26:26,650] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:26:27,536] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:26:32,160] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:38:33,595] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:38:44,436] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:38:44,906] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:38:45,698] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:38:46,785] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:38:47,796] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:38:58,141] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:38:58,422] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:38:58,644] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:38:58,858] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:38:59,432] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:01,275] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:02,778] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:03,016] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:03,270] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:04,244] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:05,592] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:14,816] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:15,013] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:15,174] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:15,358] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:15,527] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:15,692] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:15,878] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:16,051] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:16,238] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:16,425] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:16,598] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:16,794] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:16,997] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:17,200] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:17,387] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:17,573] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:17,772] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:17,987] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:19,266] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:32,108] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:45,224] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:45,429] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:45,601] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:45,802] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:45,975] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:46,152] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:46,332] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:46,539] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:46,720] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:50,951] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:55,214] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:55,305] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:57,870] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:39:58,744] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:40:04,672] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:40:16,243] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:40:24,493] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:40:30,404] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:40:42,141] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:43:25,351] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:43:36,969] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:43:43,255] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:50:56,091] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:51:04,289] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:51:17,602] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:57:53,804] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:57:58,651] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 09:58:05,399] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:02:35,377] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:04:56,248] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:05:07,463] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:05:11,060] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:05:44,686] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:05:46,588] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:05:49,270] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:05:54,536] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:05:56,215] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:05:57,027] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:05:58,145] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:06:06,619] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:06:09,668] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:06:12,161] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:06:17,091] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:06:20,219] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:06:23,880] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:06:29,335] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:06:32,793] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:06:36,272] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:06:48,011] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:07:05,041] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:07:08,768] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:07:17,765] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:07:24,951] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:12:46,838] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:13:02,479] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:13:06,594] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:13:11,101] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:13:38,224] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:13:41,014] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:13:45,160] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:13:48,810] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:14:00,695] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:14:17,691] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:14:46,246] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:30:57,916] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:57:48,382] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 10:59:19,121] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:00:32,916] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:01:31,190] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:02:31,327] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:02:38,679] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:26:26,371] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:27:47,343] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:27:59,998] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:28:05,654] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:29:02,441] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:29:03,010] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:29:03,340] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:29:03,985] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:29:19,689] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:29:21,662] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:31:20,720] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:31:27,379] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:31:27,850] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:31:28,232] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:31:28,665] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:42:39,840] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:42:57,522] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:48:20,924] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:48:37,454] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:48:40,080] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:48:44,725] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:48:53,251] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:49:17,747] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:49:28,574] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:49:32,528] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:59:14,490] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:59:24,917] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:59:28,086] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:59:30,938] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 11:59:36,440] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 12:02:09,168] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 18:00:04,499] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 18:00:04,501] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with test_model model.
+[2026-05-23 18:00:04,502] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:00:04,502] INFO [ieso_hedging_tool.src.engines.forecasting:23] - Fitting pricing forecasting parameters on 5 points.
+[2026-05-23 18:00:04,504] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:00:04,504] WARNING [ieso_hedging_tool.src.engines.forecasting:20] - Attempted to fit model with empty historical data.
+[2026-05-23 18:00:04,505] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:00:04,505] INFO [ieso_hedging_tool.src.engines.forecasting:23] - Fitting pricing forecasting parameters on 5 points.
+[2026-05-23 18:00:04,506] INFO [ieso_hedging_tool.src.engines.forecasting:49] - Predicting next 5 hours (Last spot: 30.00, μ: 30.20)
+[2026-05-23 18:01:02,438] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 18:01:02,441] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with test_model model.
+[2026-05-23 18:01:02,442] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:01:02,442] INFO [ieso_hedging_tool.src.engines.forecasting:23] - Fitting pricing forecasting parameters on 5 points.
+[2026-05-23 18:01:02,443] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:01:02,444] WARNING [ieso_hedging_tool.src.engines.forecasting:20] - Attempted to fit model with empty historical data.
+[2026-05-23 18:01:02,445] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:01:02,445] INFO [ieso_hedging_tool.src.engines.forecasting:23] - Fitting pricing forecasting parameters on 5 points.
+[2026-05-23 18:01:02,445] INFO [ieso_hedging_tool.src.engines.forecasting:49] - Predicting next 5 hours (Last spot: 30.00, μ: 30.20)
+[2026-05-23 18:01:02,508] INFO [src.engines.ingestion_peakhours:28] - Fetching IESO real-time demand from: https://reports-public.ieso.ca/public/RealtimeDemandZonal/PUB_RealtimeDemandZonal.csv
+[2026-05-23 18:01:02,510] ERROR [src.engines.ingestion_peakhours:67] - IESO Ingestion Pipeline Error: '>' not supported between instances of 'MagicMock' and 'int'
+Traceback (most recent call last):
+  File "/Users/anjanid/projects/ieso_hedging_tool/src/engines/ingestion_peakhours.py", line 37, in fetch_live_ieso_demand
+    df["Hour"] = pd.to_numeric(df["Hour"], errors="coerce").astype("Int64")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/anjanid/projects/ieso_hedging_tool/hedge_env/lib/python3.11/site-packages/pandas/core/tools/numeric.py", line 211, in to_numeric
+    elif getattr(arg, "ndim", 1) > 1:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'MagicMock' and 'int'
+[2026-05-23 18:01:31,200] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 18:01:31,202] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with test_model model.
+[2026-05-23 18:01:31,203] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:01:31,203] INFO [ieso_hedging_tool.src.engines.forecasting:23] - Fitting pricing forecasting parameters on 5 points.
+[2026-05-23 18:01:31,205] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:01:31,205] WARNING [ieso_hedging_tool.src.engines.forecasting:20] - Attempted to fit model with empty historical data.
+[2026-05-23 18:01:31,206] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:01:31,207] INFO [ieso_hedging_tool.src.engines.forecasting:23] - Fitting pricing forecasting parameters on 5 points.
+[2026-05-23 18:01:31,207] INFO [ieso_hedging_tool.src.engines.forecasting:49] - Predicting next 5 hours (Last spot: 30.00, μ: 30.20)
+[2026-05-23 18:01:31,273] INFO [src.engines.ingestion_peakhours:28] - Fetching IESO real-time demand from: https://reports-public.ieso.ca/public/RealtimeDemandZonal/PUB_RealtimeDemandZonal.csv
+[2026-05-23 18:01:31,296] INFO [src.engines.ingestion_peakhours:58] - IESO demand fetch complete — 2 hourly rows from 2023-01-01 00:00:00 to 2023-01-01 01:00:00
+[2026-05-23 18:02:01,210] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 18:02:01,212] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with test_model model.
+[2026-05-23 18:02:01,213] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:02:01,214] INFO [ieso_hedging_tool.src.engines.forecasting:23] - Fitting pricing forecasting parameters on 5 points.
+[2026-05-23 18:02:01,215] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:02:01,215] WARNING [ieso_hedging_tool.src.engines.forecasting:20] - Attempted to fit model with empty historical data.
+[2026-05-23 18:02:01,216] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:02:01,217] INFO [ieso_hedging_tool.src.engines.forecasting:23] - Fitting pricing forecasting parameters on 5 points.
+[2026-05-23 18:02:01,217] INFO [ieso_hedging_tool.src.engines.forecasting:49] - Predicting next 5 hours (Last spot: 30.00, μ: 30.20)
+[2026-05-23 18:02:01,281] INFO [src.engines.ingestion_peakhours:28] - Fetching IESO real-time demand from: https://reports-public.ieso.ca/public/RealtimeDemandZonal/PUB_RealtimeDemandZonal.csv
+[2026-05-23 18:02:01,296] INFO [src.engines.ingestion_peakhours:58] - IESO demand fetch complete — 2 hourly rows from 2023-01-01 00:00:00 to 2023-01-01 01:00:00
+[2026-05-23 18:02:01,299] INFO [src.engines.ingestion_peakhours:28] - Fetching IESO real-time demand from: https://reports-public.ieso.ca/public/RealtimeDemandZonal/PUB_RealtimeDemandZonal.csv
+[2026-05-23 18:02:01,299] ERROR [src.engines.ingestion_peakhours:67] - IESO Ingestion Pipeline Error: Network error
+Traceback (most recent call last):
+  File "/Users/anjanid/projects/ieso_hedging_tool/src/engines/ingestion_peakhours.py", line 31, in fetch_live_ieso_demand
+    df = pd.read_csv(url, skiprows=_SKIP_ROWS)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/anjanid/.pyenv/versions/3.11.9/lib/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/anjanid/.pyenv/versions/3.11.9/lib/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/anjanid/.pyenv/versions/3.11.9/lib/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: Network error
+[2026-05-23 18:03:03,449] INFO [ieso_hedging_tool:50] - Project directories and logging engine initialized.
+[2026-05-23 18:03:03,453] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with test_model model.
+[2026-05-23 18:03:03,454] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:03:03,454] INFO [ieso_hedging_tool.src.engines.forecasting:23] - Fitting pricing forecasting parameters on 5 points.
+[2026-05-23 18:03:03,456] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:03:03,456] WARNING [ieso_hedging_tool.src.engines.forecasting:20] - Attempted to fit model with empty historical data.
+[2026-05-23 18:03:03,457] INFO [ieso_hedging_tool.src.engines.forecasting:15] - Initialized LMPForecaster with mean_reversion model.
+[2026-05-23 18:03:03,457] INFO [ieso_hedging_tool.src.engines.forecasting:23] - Fitting pricing forecasting parameters on 5 points.
+[2026-05-23 18:03:03,457] INFO [ieso_hedging_tool.src.engines.forecasting:49] - Predicting next 5 hours (Last spot: 30.00, μ: 30.20)
+[2026-05-23 18:03:03,520] INFO [src.engines.ingestion_peakhours:28] - Fetching IESO real-time demand from: https://reports-public.ieso.ca/public/RealtimeDemandZonal/PUB_RealtimeDemandZonal.csv
+[2026-05-23 18:03:03,534] INFO [src.engines.ingestion_peakhours:58] - IESO demand fetch complete — 2 hourly rows from 2023-01-01 00:00:00 to 2023-01-01 01:00:00
+[2026-05-23 18:03:03,537] INFO [src.engines.ingestion_peakhours:28] - Fetching IESO real-time demand from: https://reports-public.ieso.ca/public/RealtimeDemandZonal/PUB_RealtimeDemandZonal.csv
+[2026-05-23 18:03:03,537] ERROR [src.engines.ingestion_peakhours:67] - IESO Ingestion Pipeline Error: Network error
+Traceback (most recent call last):
+  File "/Users/anjanid/projects/ieso_hedging_tool/src/engines/ingestion_peakhours.py", line 31, in fetch_live_ieso_demand
+    df = pd.read_csv(url, skiprows=_SKIP_ROWS)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/anjanid/.pyenv/versions/3.11.9/lib/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/anjanid/.pyenv/versions/3.11.9/lib/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/anjanid/.pyenv/versions/3.11.9/lib/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: Network error
+[2026-05-23 18:03:03,798] INFO [ieso_hedging_tool.src.core.db_manager:27] - Initialized local SQLite storage at: /private/var/folders/jj/z6z8sj0x5kn824vb1cnls1z00000gn/T/pytest-of-anjanid/pytest-6/test_database_lifecycle0/integration_test.db

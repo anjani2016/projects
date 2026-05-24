@@ -1,0 +1,43 @@
+# Data Analysis & Mapping
+
+
+numpy
+geopandas
+folium # heatmaps
+plotly # choropleth maps - interactive charts
+requests
+matplotlib
+seaborn
+
+# for runnng on plotly
+
+dash
+plotly
+gunicorn
+pandas
+
+
+# Jupyter Notebook Environment
+# jupyter
+# ipykernel
+
+# read excel
+# openpyxl
+# catalogue
+
+## snowflake
+
+# pyiceberg[s3fs,pyarrow]
+
+## pyiceberg: The core library.
+
+## [s3fs]: Adds support for talking to S3 (essential for when you move from your desktop to the cloud).
+
+## [pyarrow]: The engine that handles the actual data conversion and metadata writing.
+
+## databricks
+
+# deltalake
+
+##app streamlit
+streamlit

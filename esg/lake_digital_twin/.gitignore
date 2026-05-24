@@ -1,0 +1,6 @@
+.streamlit/secrets.toml
+WBT_Linux/
+__pycache__/
+*.pyc
+
+lakes_env

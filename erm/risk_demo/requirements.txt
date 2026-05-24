@@ -1,0 +1,18 @@
+# libraries
+
+# data 
+numpy  # For triangular distributions
+pandas # For data manipulation
+matplotlib # For the Risk S-Curve
+seaborn
+scipy
+statsmodels
+
+# app
+
+
+streamlit       # for app streamlit
+
+PyP6Xer      # For Primavera files
+
+networkx        #standard Python tool for handling complex relationships and dependencies

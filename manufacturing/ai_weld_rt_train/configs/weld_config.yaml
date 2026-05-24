@@ -1,0 +1,11 @@
+# weld_config.yaml
+path: /Users/anjanid/projects/ai_weld_rt_train/data/weld_data  # Absolute path to prevent directory confusion
+train: images/train          # Training images
+val: images/val              # Validation images
+
+# Define the classes based on your inspection reports
+names:
+  0: porosity
+  1: crack
+  2: slag_inclusion
+  3: lack_of_fusion

@@ -1,0 +1,14 @@
+# UI & Visualization
+streamlit
+plotly              # Better than matplotlib for interactive financial charts
+
+# Data Handling & Scraper
+pandas
+numpy
+requests            # Essential for downloading IESO CSV reports
+python-dotenv       # Securely manages local file paths or API keys
+
+# Financial Math & Simulations
+scipy               # Provides 'norm' for Black-Scholes and optimization tools
+statsmodels         # OLS trendlines for temperature-demand correlation
+mibian            # Optional: A specialized library for options pricing

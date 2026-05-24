@@ -1,0 +1,9 @@
+# Ignore the virtual environment
+weld_ai_env/
+
+
+
+
+# Python caches
+__pycache__/
+*.pyc
