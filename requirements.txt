@@ -1,0 +1,1 @@
+-r manufacturing/ai_weld_rt_train/requirements.txt
