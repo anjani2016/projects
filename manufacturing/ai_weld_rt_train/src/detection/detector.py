@@ -23,7 +23,46 @@ class WeldDetector:
         except Exception as e:
             logging.error(f"Failed to load model weights: {e}")
             # Fallback to standard yolov8 if local weights aren't found
-            self.model = YOLO("yolov8n.pt").to(self.device)
+            self.model = YOLO(os.path.join("weights", "yolov8n.pt")).to(self.device)
+
+        # Dynamic translation of Russian metadata classes to English
+        ru_to_en = {
+            "пора": "porosity",
+            "включение": "inclusion",
+            "подрез": "undercut",
+            "прожог": "burn_through",
+            "трещина": "crack",
+            "наплыв": "overlap",
+            "эталон 1": "reference_standard_1",
+            "эталон 2": "reference_standard_2",
+            "эталон 3": "reference_standard_3",
+            "эталон1": "reference_standard_1",
+            "эталон2": "reference_standard_2",
+            "эталон3": "reference_standard_3",
+            "пора-скрытая": "hidden_porosity",
+            "утяжина": "crater",
+            "несплавление": "lack_of_fusion",
+            "непровар корня": "incomplete_root_penetration"
+        }
+        
+        if hasattr(self.model, 'names') and self.model.names:
+            translated = {}
+            for cls_id, name in self.model.names.items():
+                name_clean = str(name).lower().strip()
+                translated[cls_id] = ru_to_en.get(name_clean, name)
+            
+            # Defensive setter logic to bypass read-only property constraints safely
+            try:
+                if hasattr(self.model, 'model') and hasattr(self.model.model, 'names'):
+                    self.model.model.names = translated
+                else:
+                    self.model.names = translated
+            except AttributeError:
+                # If direct setting fails, mutate the dictionary in-place!
+                try:
+                    self.model.names.update(translated)
+                except Exception as err:
+                    logging.warning(f"Could not override model names dynamically: {err}")
 
     def detect(self, image_np, confidence=0.25):
         """Runs inference and returns structured data for the Engineering Brain[cite: 1]."""
