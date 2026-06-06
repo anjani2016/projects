@@ -90,8 +90,8 @@ jobs:
         with:
           jules_api_key: ${{ secrets.JULES_API_KEY }}
           starting_branch: ${{ github.ref_name }}
-          include_last_commit: 'false'
-          include_commit_log: 'false'
+          include_last_commit: ''
+          include_commit_log: ''
           prompt: |
             The local CI verification execution has failed inside the ${{ matrix.lang }} subproject directory: "./${{ matrix.project }}".
             
