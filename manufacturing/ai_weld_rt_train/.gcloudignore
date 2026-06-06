@@ -1,0 +1,13 @@
+.gcloudignore
+.git
+.gitignore
+weld_ai_env/
+data/
+__pycache__/
+*.pyc
+.DS_Store
+runs/
+logs/
+webapp_logs.zip
+azure_logs/
+.pytest_cache/

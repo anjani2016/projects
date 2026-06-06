@@ -2,7 +2,6 @@ weld_ai_env/
 .git/
 data/
 runs/
-weights/
 *.pyc
 __pycache__/
 .DS_Store

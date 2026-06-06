@@ -1,26 +1,32 @@
-# Use an official Python runtime as a parent image
+# 1. Use a clean, lightweight Python base
 FROM python:3.11-slim
 
-# Set the working directory in the container
-WORKDIR /app
-
-# Install system dependencies for OpenCV
+# 2. Install essential graphics rendering dependencies for OpenCV
 RUN apt-get update && apt-get install -y \
     libgl1 \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# 3. Establish the operational working directory
+WORKDIR /app
 
-# Create necessary directories for logs and data
-RUN mkdir -p logs data/raw data/processed data/reports
+# 4. Copy ONLY the requirements file first (Crucial for Docker caching)
+COPY requirements.txt .
 
-# Install any needed packages specified in requirements.txt
+# 5. FORCE the lightweight, CPU-specific PyTorch framework to avoid the 3GB bloat
+RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+
+# 6. Install the remaining engineering dependencies (Streamlit, Ultralytics, OpenCV, etc.)
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Make port 8501 available to the world outside this container
+# 7. Copy your source code over (This layer builds instantly!)
+COPY . .
+
+# 8. Set up your local execution folder infrastructure
+RUN mkdir -p logs data/raw data/processed data/reports
+
+# 9. Expose Streamlit's native port
 EXPOSE 8501
 
-# Run main.py when the container launches
-CMD streamlit run main.py --server.port $PORT --server.address 0.0.0.0
+# 10. Start up the app using an absolute, stable port value
+CMD ["streamlit", "run", "main.py", "--server.port=8501", "--server.address=0.0.0.0"]

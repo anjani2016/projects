@@ -87,9 +87,6 @@ The architecture is built upon a modern, open-source AI and data science stack:
     *   Ultralytics YOLO (Segmentation)
 *   **Deep Learning Backend:** PyTorch (`torch`, `torchvision`)
 *   **Data Formatting:** COCO JSON & YOLO formats
-
-### ⚠️ License & Attribution Notice
-The default training dataset and the models trained on it (such as `m60.pt` and the fine-tuned RT-DETR) are distributed under the **CC BY-NC-SA 4.0** license. They are strictly for **demo, research, and hackathon purposes only** and may not be used for commercial applications. We give full credit to the original creators from the [Gazpromneft Hackathon](https://www.kaggle.com/datasets/viacheslavasadchiy/radiographs-welding-defect-detection). Alternate commercial-friendly data is currently being arranged for future production use.
 """)
 
 def analyzer_page():
@@ -126,7 +123,6 @@ def analyzer_page():
     model_option = st.sidebar.selectbox(
         "Active Model",
         [
-            "Fine-Tuned HF DETR",
             "Hugging Face DETR (rf-detr-segmentation)",
             "Gazpromneft NDT Specialist (m60.pt)",
             "General Foundation Model (yolo11x)",
@@ -137,7 +133,6 @@ def analyzer_page():
     
     # Map model option to path
     model_paths = {
-        "Fine-Tuned HF DETR": "models/hf_weld_rtdetr_final",
         "Hugging Face DETR (rf-detr-segmentation)": "Roboflow/rf-detr-segmentation",
         "Gazpromneft NDT Specialist (m60.pt)": "weights/gazpromneft_kaggle/m60.pt",
         "General Foundation Model (yolo11x)": "weights/welding_defects_yolo11x.pt",
@@ -194,187 +189,73 @@ def analyzer_page():
         #     st.warning("⚠️ **ASME V Image Quality Alert: Radiography film does not meet sensitivity or unsharpness standards.**")
 
         if is_iqi_valid:
-            # 2. Real AI Detection (Phase 2)
-            st.info(f"Running inference using: `{model_option}`")
-            if "HF DETR" in model_option or "Hugging Face" in model_option:
-                detector = HFWeldDetector(model_id=selected_model_path)
-            else:
-                detector = WeldDetector(model_path=selected_model_path) 
+            # Multi-Agent Workflow Execution
+            st.subheader("🤖 Multi-Agent Analysis (Band Framework)")
             
-            st.subheader("Phase 3: AI Analysis Results")
-            real_defects = detector.detect(enhanced_img)
-
-            if not real_defects:
-                st.success("✅ **Inspection Completed: No defects detected by the AI engine.**")
+            with st.spinner("Initializing Band Network Agents..."):
+                from src.agents.band_network import band_client
+                from src.agents.inspector_agent import InspectorAgent
+                from src.agents.compliance_agent import ComplianceAgent
+                from src.agents.reviewer_agent import ReviewerAgent
                 
-                st.markdown("### 📋 NDT Verification Checklist")
-                st.markdown(f"All standard defect categories under **{engine.standard}** have been verified:")
+                inspector = InspectorAgent(model_option, selected_model_path)
+                compliance = ComplianceAgent()
+                reviewer = ReviewerAgent()
                 
-                # Retrieve the active model's class names
-                model_classes = list(detector.model.names.values())
+            with st.spinner("🕵️‍♂️ Inspector Agent analyzing radiography..."):
+                # Trigger Agent 1
+                inspector.inspect(enhanced_img)
+                insp_payload = band_client.wait_for("inspection_complete")
                 
-                # Human-readable mapping dictionary (valid weld defects only)
-                class_display_names = {
-                    "crack": "Linear Crack Indications",
-                    "porosity": "Porosity / Gas Pores",
-                    "inclusion": "Slag / Tungsten Inclusions",
-                    "lack_of_fusion": "Lack of Fusion",
-                    "incomplete_root_penetration": "Incomplete Root Penetration",
-                    "undercut": "Undercutting",
-                    "burn_through": "Burn-Through",
-                    "overlap": "Weld Metal Overlap",
-                    "crater": "Shrinkage Crater",
-                    "hidden_porosity": "Sub-surface Porosity",
-                    "Defect": "General Defective Indications"
-                }
-
-                # Filter out generic COCO classes, calibration targets, and limit to known weld defects
-                display_classes = [c for c in model_classes if "reference_standard" not in c and "Эталон" not in c and (c in class_display_names or c.lower() in class_display_names)]
+            with st.spinner("📐 Compliance Agent validating against ASME codes..."):
+                # Agent 2 listens to Agent 1
+                compliance.evaluate(insp_payload, thickness)
+                comp_payload = band_client.wait_for("compliance_verdict")
                 
-                # If a completely generic model is loaded and no weld defects are known to it, fallback to 'Defect'
-                if not display_classes:
-                    display_classes = ["Defect"]
-
-
-                # Professional reassurance note generator
-                def get_reassurance_note(class_name, display_name):
-                    if "crack" in class_name.lower():
-                        return "Zero-tolerance check passed. No linear crack indications detected."
-                    elif "porosity" in class_name.lower():
-                        return f"No {display_name.lower()} detected, or indications are well within acceptable limits."
-                    elif "undercut" in class_name.lower() or "penetration" in class_name.lower() or "fusion" in class_name.lower():
-                        return f"Compliant. No physical {display_name.lower()} anomalies detected."
-                    else:
-                        return f"Passed. No {display_name.lower()} detected."
-
-                # Compile checklist data
-                checklist_data = []
-                for c in display_classes:
-                    display_name = class_display_names.get(c, c.replace("_", " ").title())
-                    checklist_data.append({
-                        "Defect Category": display_name,
-                        "Status": "✅ Passed",
-                        "Compliance & Audit Notes": get_reassurance_note(c, display_name)
-                    })
+            with st.spinner("⚖️ Reviewer Agent managing risk & reporting..."):
+                # Agent 3 listens to Agent 2
+                reviewer.final_review(comp_payload)
+                final_payload = band_client.wait_for("report_ready")
+            
+            # Rendering final results
+            disposition_color = "green" if final_payload['passed'] else "red"
+            st.success(f"**Multi-Agent Workflow Complete!** Final Status: :{disposition_color}[{final_payload['final_status']}]")
+            
+            st.markdown("### 📝 Senior Reviewer Summary")
+            if final_payload['passed']:
+                st.success(final_payload['llm_summary'])
+            else:
+                st.error(final_payload['llm_summary'])
                 
-                st.table(checklist_data)
-                
-                # Render the clean analyzed image with a premium green border indicating PASS
-                st.subheader("📸 AI Inspection Visual Output")
-                annotated_img = cv2.cvtColor(enhanced_img, cv2.COLOR_GRAY2BGR)
+            if final_payload.get('report_path'):
+                st.info(f"📄 Official Report Generated: `{final_payload['report_path']}`")
+            
+            st.subheader("📸 AI Inspection Visual Output")
+            annotated_img = cv2.cvtColor(enhanced_img, cv2.COLOR_GRAY2BGR)
+            
+            # Draw on Image (Visualization)
+            if not final_payload['defects']:
                 h, w, _ = annotated_img.shape
-                # Draw a 4px green border around the frame
                 cv2.rectangle(annotated_img, (0, 0), (w - 1, h - 1), (0, 255, 0), 4)
                 cv2.putText(annotated_img, "COMPLIANT / CLEAR", (20, 40), 
                             cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
-                st.image(annotated_img, caption="AI Analysis: 100% Compliant (No Defects Highlighted)", channels="BGR")
             else:
-                # 1. Calibration (Phase 3b)
-                # For now, we assume 10 pixels = 0.8mm for testing
-                engine.calibrate(reference_px=10, physical_mm=0.8)
-
-                # Convert to BGR for color annotations
-                annotated_img = cv2.cvtColor(enhanced_img, cv2.COLOR_GRAY2BGR)
-                findings_for_report = []
-                log_table_data = []
-
-                # Human-readable NDT Abbreviation mapping dictionary
-                ndt_abbreviations = {
-                    "crack": "Crack (Linear Indication)",
-                    "porosity": "GP (Gas Pore / Porosity)",
-                    "inclusion": "SI (Slag Inclusion)",
-                    "lack_of_fusion": "IF (Incomplete Fusion)",
-                    "incomplete_root_penetration": "IP (Inadequate Penetration)",
-                    "undercut": "EU (External Undercut)",
-                    "burn_through": "BT (Burnthrough)",
-                    "overlap": "OL (Weld Overlap)",
-                    "crater": "RC (Root Concavity / Crater)",
-                    "hidden_porosity": "HGP (Hidden Gas Pore)",
-                    "defect": "Defect (General Indication)"
-                }
-
-                # Dynamically retrieve defect limits based on engine definitions for display
-                def get_defect_limit(c, T):
-                    c_lower = c.lower().strip()
-                    if "crack" in c_lower:
-                        return 0.0
-                    elif "porosity" in c_lower:
-                        return min(6.0, T / 4)
-                    elif "inclusion" in c_lower or "slag" in c_lower:
-                        return T / 3
-                    elif "penetration" in c_lower or "ip" in c_lower or "lop" in c_lower:
-                        return min(3.0, 0.2 * T)
-                    else:
-                        return min(6.0, T / 4)
-
-                for item_idx, d in enumerate(real_defects, 1):
-                    # 3. Engineering Validation (Phase 3)
-                    real_size = engine.get_mm(d['dims']['length'])
-                    passed, reason = engine.validate_defect(d['type'], {'length': real_size}, thickness)
-                    
-                    # NDT Abbreviation Code translation
-                    clean_type = d['type'].lower().strip()
-                    defect_code = ndt_abbreviations.get(clean_type, d['type'])
-                    limit_val = get_defect_limit(clean_type, thickness)
-                    
-                    disposition = "✅ ACCEPT" if passed else "❌ REJECT"
-                    
-                    # Standardized NDT Weld Log Row compilation
-                    log_table_data.append({
-                        "Item": item_idx,
-                        "Weld ID": weld_id,
-                        "Welder ID": welder_id,
-                        "Defect Category (Code)": defect_code,
-                        "Measured Size": f"{real_size:.2f} mm",
-                        "ASME Limit": f"{limit_val:.2f} mm" if limit_val > 0 else "0.00 mm (Zero Tolerance)",
-                        "Disposition": disposition
-                    })
-
-                    # Compile details for technical audit panels
-                    findings_for_report.append({
-                        "d": d,
-                        "real_size": real_size,
-                        "passed": passed,
-                        "reason": reason,
-                        "color": "green" if passed else "red"
-                    })
-
-                    # 2. Draw on Image (Visualization)
+                for d in final_payload['defects']:
                     x1, y1, x2, y2 = map(int, d['bbox'])
-                    box_color = (0, 255, 0) if passed else (0, 0, 255)
+                    box_color = (0, 255, 0) if final_payload['passed'] else (0, 0, 255)
                     cv2.rectangle(annotated_img, (x1, y1), (x2, y2), box_color, 2)
-                    cv2.putText(annotated_img, f"{real_size:.1f}mm", (x1, y1-10), 
+                    cv2.putText(annotated_img, d['type'], (x1, y1-10), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.6, box_color, 2)
-                
-                # Render the standardized NDT Weld Findings Table (Commented out for clean demo mode)
-                # st.subheader("📋 Radiographic Testing Weld Inspection Log")
-                # st.table(log_table_data)
-                
-                # Render the expandable details for technical audit
+                                
+            st.image(annotated_img, caption="Multi-Agent Defect Mapping", channels="BGR")
+            
+            # Expandable audit logs
+            if final_payload['defects']:
                 st.markdown("### 🔍 Technical Audits & Coordinates")
-                for f in findings_for_report:
-                    d = f["d"]
-                    with st.expander(f"Item: {d['type']} (Conf: {d['confidence']:.2f})"):
-                        st.markdown(f"**Status:** :{f['color']}[{f['reason']}]")
-                        st.write(f"**Real Size:** {f['real_size']:.2f} mm")
-                        st.write(f"**Raw Pixel Length:** {d['dims']['length']:.2f}")
+                for item_idx, d in enumerate(final_payload['defects'], 1):
+                    with st.expander(f"Item {item_idx}: {d['type']} (Conf: {d['confidence']:.2f})"):
                         st.write(f"**Bounding Box (xyxy):** `{d['bbox']}`")
-
-                # Show annotated image
-                st.subheader("📸 AI Inspection Visual Output")
-                st.image(annotated_img, caption="AI Detection & Measurements", channels="BGR")
-
-                # 3. Generate Report (Phase 4) - Disabled for now
-                # if st.button("Generate Final Report"):
-                #     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-                #     report_path = f"data/reports/inspection_report_{timestamp}.pdf"
-                #     annotated_img_path = "data/processed/temp_annotated.jpg"
-                #     cv2.imwrite(annotated_img_path, annotated_img)
-                #     
-                #     reporter = WeldReporter()
-                #     report_data = {'standard': 'ASME B31.3', 'findings': findings_for_report}
-                #     reporter.create_report(report_path, report_data, annotated_img_path)
-                #     st.success(f"Report saved to {report_path}")
+                        st.write(f"**ASME Code Validation:** {final_payload['reason']}")
 
         else:
             st.error(f"Insufficient Sensitivity: Only {wires} IQI wires detected. Stop.")

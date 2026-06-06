@@ -2,6 +2,7 @@ ultralytics
 opencv-python-headless
 torch
 huggingface_hub
+transformers
 numpy
 pandas
 streamlit

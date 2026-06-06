@@ -1,4 +1,4 @@
-from ultralytics import YOLO
+from ultralytics import YOLO, RTDETR
 import torch
 import logging
 import os
@@ -19,7 +19,10 @@ class WeldDetector:
         
         # Load the specific weights you identified
         try:
-            self.model = YOLO(path).to(self.device)
+            if "rtdetr" in path.lower():
+                self.model = RTDETR(path).to(self.device)
+            else:
+                self.model = YOLO(path).to(self.device)
         except Exception as e:
             logging.error(f"Failed to load model weights: {e}")
             # Fallback to standard yolov8 if local weights aren't found
