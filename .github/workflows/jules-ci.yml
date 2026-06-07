@@ -28,6 +28,8 @@ jobs:
           #  lang: 'android' # Note: Android CI steps are not yet configured below
           - project: 'manufacturing/ai_weld_rt_train'
             lang: 'python'
+          - project: 'manufacturing/ai_weld_hackathon'
+            lang: 'python'
           - project: 'esg/lake_digital_twin'
             lang: 'python'
           - project: 'esg/tracy_arm_flord_landslide'
