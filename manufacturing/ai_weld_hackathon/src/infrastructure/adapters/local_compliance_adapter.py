@@ -1,32 +1,76 @@
+import os
 from src.core.ports.compliance_port import CompliancePort
 
 class LocalComplianceAdapter(CompliancePort):
     def __init__(self, db_port = None):
         self.db_port = db_port
 
+    def _load_local_rule_file(self, standard_name: str) -> str:
+        # Normalize name for file path checks
+        normalized = standard_name.replace(" ", "_").replace("(", "").replace(")", "").replace("/", "_")
+        names_to_try = [standard_name, normalized, normalized.lower(), standard_name.lower()]
+        
+        # Paths to search
+        search_dirs = [
+            "data/rules/standards",
+            "data/rules/client_specs",
+            "data/rules/other_standards",
+            "rules/standards",
+            "rules/client_specs",
+            "rules/other_standards",
+            "data/rules",
+            "rules"
+        ]
+        
+        for folder in search_dirs:
+            for name in names_to_try:
+                for ext in [".md", ".json", ".txt"]:
+                    path = os.path.join(folder, f"{name}{ext}")
+                    if os.path.exists(path):
+                        try:
+                            with open(path, "r", encoding="utf-8") as f:
+                                return f.read()
+                        except Exception:
+                            pass
+        return ""
+
     def get_rules(self, thickness: float, standard: str = "ASME_B31_3") -> str:
+        normalized_std = standard.replace(".", "_")
+        
+        # 1. Try DB standard lookup (High Priority / Cloud First)
+        db_std = None
         if self.db_port:
             try:
                 db_std = self.db_port.get_compliance_standard(standard)
                 if not db_std and "." in standard:
-                    db_std = self.db_port.get_compliance_standard(standard.replace(".", "_"))
-                if db_std and "rules" in db_std:
-                    rules = db_std["rules"]
-                    porosity_limit = thickness * rules.get("porosity_limit_ratio", 0.333)
-                    inclusion_limit = thickness * rules.get("inclusion_limit_ratio", 0.5)
-                    return (f"{db_std['name']} Rules for {thickness}mm thickness (Dynamic Database Standards):\n"
-                            f"- Domain: {rules.get('domain', 'N/A')}\n"
-                            f"- Usage: {rules.get('usage', 'N/A')}\n"
-                            f"- Scope: {rules.get('scope', 'N/A')}\n"
-                            f"- 'crack' or 'lack_of_fusion' is {rules.get('crack', 'ALWAYS REJECT')}.\n"
-                            f"- 'porosity' length must be less than {porosity_limit:.1f}mm to PASS.\n"
-                            f"- 'inclusion' length must be less than {inclusion_limit:.1f}mm to PASS.\n"
-                            f"Note: Assume 1 pixel = 0.1mm for dimension conversion.")
+                    db_std = self.db_port.get_compliance_standard(normalized_std)
+                
+                # If DB record has markdown content, return it directly
+                if db_std and db_std.get("markdown_content"):
+                    return db_std["markdown_content"]
             except Exception:
-                # If database query fails, failover to hardcoded values below
                 pass
+                
+        # 2. Local File Lookup Fallback (Offline fallback)
+        local_rules = self._load_local_rule_file(standard)
+        if local_rules:
+            return local_rules
+            
+        # 3. Dynamic Database JSON parsing fallback
+        if db_std and "rules" in db_std:
+            rules = db_std["rules"]
+            porosity_limit = thickness * rules.get("porosity_limit_ratio", 0.333)
+            inclusion_limit = thickness * rules.get("inclusion_limit_ratio", 0.5)
+            return (f"{db_std['name']} Rules for {thickness}mm thickness (Dynamic Database Fallback):\n"
+                    f"- Domain: {rules.get('domain', 'N/A')}\n"
+                    f"- Usage: {rules.get('usage', 'N/A')}\n"
+                    f"- Scope: {rules.get('scope', 'N/A')}\n"
+                    f"- 'crack' or 'lack_of_fusion' is {rules.get('crack', 'ALWAYS REJECT')}.\n"
+                    f"- 'porosity' length must be less than {porosity_limit:.1f}mm to PASS.\n"
+                    f"- 'inclusion' length must be less than {inclusion_limit:.1f}mm to PASS.\n"
+                    f"Note: Assume 1 pixel = 0.1mm for dimension conversion.")
 
-        # Fallback dictionary mapping all 13 standards
+        # 4. Hardcoded Fallback dictionary mapping all 13 standards (Absolute safety net)
         fallback_data = {
             "ASME_SEC_8_D1": ("ASME VIII Div 1", "Pressure Vessels", "Rules for design, fabrication, inspection, and testing of pressure vessels operating at pressures >15 psig."),
             "ASME_SEC_8_D2": ("ASME VIII Div 2", "Pressure Vessels", "Alternative, more stringent rules for pressure vessels allowing higher design stresses and reduced material thickness."),
@@ -43,9 +87,7 @@ class LocalComplianceAdapter(CompliancePort):
             "API_570": ("API 570", "Inspection", "Standards for the inspection, repair, alteration, and rerating of in-service metallic piping systems."),
         }
         
-        normalized_std = standard.replace(".", "_")
         info = fallback_data.get(standard) or fallback_data.get(normalized_std)
-        
         if info:
             name, domain, scope = info
             porosity_limit = thickness * 0.333

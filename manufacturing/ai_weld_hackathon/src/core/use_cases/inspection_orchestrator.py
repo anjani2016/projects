@@ -67,43 +67,23 @@ class InspectionOrchestrator:
                 "API 570": "API_570",
             }
             std_id = standard_mapping.get(regulatory_code, "ASME_B31_3")
-            normalized_code = regulatory_code.replace(" ", "_").replace("(", "").replace(")", "").replace("/", "_")
-            normalized_client = client_spec.replace(" ", "_").replace("(", "").replace(")", "").replace("/", "_")
-            normalized_other = other_standard.replace(" ", "_").replace("(", "").replace(")", "").replace("/", "_")
             
             rules_context = []
             
-            # Helper to find and read a rule file in dynamic subfolders
-            def load_rule_from_subfolder(subfolder: str, names: list) -> str:
-                for folder in [os.path.join("data", "rules", subfolder), os.path.join("rules", subfolder), os.path.join("data", "rules"), "rules"]:
-                    for name in names:
-                        for ext in [".md", ".json", ".txt"]:
-                            rule_file_path = os.path.join(folder, f"{name}{ext}")
-                            if os.path.exists(rule_file_path):
-                                try:
-                                    with open(rule_file_path, "r", encoding="utf-8") as f:
-                                        return f.read()
-                                except Exception:
-                                    pass
-                return ""
-            
-            # Load standard rules
-            std_rules = load_rule_from_subfolder("standards", [std_id, normalized_code, regulatory_code])
+            # Load standard rules (database-first via adapter)
+            std_rules = self.compliance_port.get_rules(thick, standard=std_id)
             if std_rules:
                 rules_context.append(f"--- Regulatory Code Standard: {regulatory_code} Rules ---\n{std_rules}")
-            else:
-                db_rules = self.compliance_port.get_rules(thick, standard=std_id)
-                rules_context.append(f"--- Regulatory Code Standard: {regulatory_code} Rules ---\n{db_rules}")
                 
-            # Load client spec if not "None"
+            # Load client spec if not "None" (database-first via adapter)
             if client_spec != "None":
-                client_rules = load_rule_from_subfolder("client_specs", [normalized_client, client_spec])
+                client_rules = self.compliance_port.get_rules(thick, standard=client_spec)
                 if client_rules:
                     rules_context.append(f"--- Client Specification override: {client_spec} Rules ---\n{client_rules}")
                     
-            # Load other standard if not "None"
+            # Load other standard if not "None" (database-first via adapter)
             if other_standard != "None":
-                other_rules = load_rule_from_subfolder("other_standards", [normalized_other, other_standard])
+                other_rules = self.compliance_port.get_rules(thick, standard=other_standard)
                 if other_rules:
                     rules_context.append(f"--- Other Standard: {other_standard} Rules ---\n{other_rules}")
                     

@@ -119,10 +119,18 @@ class MongoAdapter(DatabasePort):
                 standard_id TEXT UNIQUE,
                 name TEXT,
                 rules TEXT,
+                markdown_content TEXT,
                 timestamp TEXT
             )
         """)
         
+        # Migration check for compliance_standards table
+        try:
+            cursor.execute("SELECT markdown_content FROM compliance_standards LIMIT 1")
+        except sqlite3.OperationalError:
+            logging.info("Adding column markdown_content to compliance_standards...")
+            cursor.execute("ALTER TABLE compliance_standards ADD COLUMN markdown_content TEXT DEFAULT NULL")
+            
         conn.commit()
         conn.close()
 
@@ -312,8 +320,42 @@ class MongoAdapter(DatabasePort):
             }
         ]
         for std in standards_list:
-            existing = self.get_compliance_standard(std["standard_id"])
-            if not existing or "domain" not in existing.get("rules", {}):
+            std_id = std["standard_id"]
+            markdown_content = ""
+            # Load local markdown rules if available (checks standard folders)
+            for folder in ["data/rules/standards", "rules/standards", "data/rules", "rules"]:
+                for name in [std_id, std_id.lower(), std["name"], std["name"].lower()]:
+                    for ext in [".md", ".txt"]:
+                        path = os.path.join(folder, f"{name}{ext}")
+                        if os.path.exists(path):
+                            try:
+                                with open(path, "r", encoding="utf-8") as f:
+                                    markdown_content = f.read()
+                                    break
+                            except Exception:
+                                pass
+                    if markdown_content:
+                        break
+                if markdown_content:
+                    break
+            
+            if markdown_content:
+                std["markdown_content"] = markdown_content
+            else:
+                # Fallback to generated markdown content
+                std["markdown_content"] = (
+                    f"# {std['name']} Compliance Standard\n\n"
+                    f"**Domain**: {std['rules']['domain']}\n"
+                    f"**Material**: {std['rules']['material']}\n"
+                    f"**Usage**: {std['rules']['usage']}\n\n"
+                    f"### Acceptance Criteria:\n"
+                    f"- Cracks and Lack of Fusion are **{std['rules']['crack']}**.\n"
+                    f"- Porosity length must be less than `Thickness * {std['rules']['porosity_limit_ratio']}`.\n"
+                    f"- Inclusions must be less than `Thickness * {std['rules']['inclusion_limit_ratio']}`.\n"
+                )
+
+            existing = self.get_compliance_standard(std_id)
+            if not existing or "domain" not in existing.get("rules", {}) or not existing.get("markdown_content"):
                 self.save_compliance_standard(std)
 
     def generate_report_id(self) -> str:
@@ -767,12 +809,13 @@ class MongoAdapter(DatabasePort):
             conn = sqlite3.connect(self.sqlite_path)
             cursor = conn.cursor()
             cursor.execute("""
-                INSERT OR REPLACE INTO compliance_standards (standard_id, name, rules, timestamp)
-                VALUES (?, ?, ?, ?)
+                INSERT OR REPLACE INTO compliance_standards (standard_id, name, rules, markdown_content, timestamp)
+                VALUES (?, ?, ?, ?, ?)
             """, (
                 standard_id,
                 standard.get("name"),
                 json.dumps(standard.get("rules")),
+                standard.get("markdown_content"),
                 standard["timestamp"]
             ))
             conn.commit()
