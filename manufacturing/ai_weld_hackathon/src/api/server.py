@@ -294,6 +294,17 @@ async def inspect_weld(
             os.remove(raw_storage_path)
         return {"status": "error", "result": str(e)}
 
+@app.get("/license")
+async def get_license():
+    """
+    Returns the MIT License text for open-source compliance.
+    """
+    try:
+        with open("LICENSE", "r") as f:
+            return {"license": f.read()}
+    except Exception:
+        return {"license": "MIT License\n\nCopyright (c) 2026 Anjani D / Centauri Research Services\n\nPermission is hereby granted..."}
+
 @app.get("/records")
 async def get_records(x_user_role: str = Header("Inspector")):
     """
