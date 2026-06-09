@@ -19,3 +19,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+ADDITIONAL LICENSE NOTICE FOR THIRD-PARTY MODEL WEIGHTS:
+
+This software distributes or loads third-party machine learning model checkpoints:
+- YOLO model checkpoints (e.g. m60.pt, welding_defects_yolo11x.pt) are licensed under the GNU Affero General Public License v3.0 (AGPL-3.0) by Ultralytics.
+- RT-DETR model checkpoints (e.g. rtdetr-l.pt) are licensed under the Apache License v2.0 by Baidu and the Hugging Face Hub.
