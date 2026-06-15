@@ -121,12 +121,9 @@ manufacturing/ai_weld_*/*.tgz
 # ==============================================================================
 # 7. LARGE GEOSPATIAL DATA & TEMP ARTIFACTS
 # ==============================================================================
-esg/tracy_arm_flord_landslide/data/
+esg/tracy_arm_flord_landslide/data/raw/
+esg/tracy_arm_flord_landslide/data/processed/dem_utm.tif
 .tmp.driveupload/
 *.egg-info/
-*.npy
-*.npz
-*.tif
-*.tiff
 .claude/
 claude-partner-network/

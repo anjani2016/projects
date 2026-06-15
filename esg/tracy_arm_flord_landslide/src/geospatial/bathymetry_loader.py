@@ -53,10 +53,12 @@ def load_bathymetry_array(
 
 
 def load_tracy_arm_bathymetry(
-    base_dir: str | Path = "data/processed",
+    base_dir: Optional[str | Path] = None,
     filename: str = "tracy_arm_bathymetry_clipped.tif",
     bounds: Optional[Tuple[float, float, float, float]] = None
 ):
     """Convenience wrapper for standard bathymetry path."""
+    if base_dir is None:
+        base_dir = Path(__file__).parent.parent.parent / "data/processed"
     path = Path(base_dir) / filename
     return load_bathymetry_array(path, bounds=bounds)

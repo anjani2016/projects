@@ -22,7 +22,8 @@ st.title("⛰️ Run-Up Analysis")
 st.write("Estimate maximum run-up along a selected fjord wall and compare with the observed 481 m.")
 
 with st.expander("📖 What is Tsunami Run-Up? (Scientific Diagram)"):
-    st.image("app/tsunami_runup_explanation.png", caption="Cross-section schematic of tsunami run-up on a steep rocky fjord wall.")
+    image_path = os.path.join(os.path.dirname(__file__), "../tsunami_runup_explanation.png")
+    st.image(image_path, caption="Cross-section schematic of tsunami run-up on a steep rocky fjord wall.")
     st.markdown("""
     **Run-up** is the maximum vertical height the tsunami wave reaches on land above the normal sea level. 
     As the incoming wave approaches a steep shore, its horizontal velocity is blocked by the rocky wall, converting its kinetic energy into a vertical surge up the cliff face.

@@ -56,7 +56,8 @@ def get_cached_bathymetry():
 @st.cache_data
 def load_and_downsample_data():
     # Load your real processed matrix
-    matrix = np.load("data/processed/tracy_arm_mesh.npy")
+    path = os.path.join(os.path.dirname(__file__), "../../data/processed/tracy_arm_mesh.npy")
+    matrix = np.load(path)
     
     # Take every 5th pixel to guarantee fast UI loading times
     stride = 5
@@ -96,18 +97,16 @@ try:
     
     st.plotly_chart(fig, use_container_width=True)
 
+    # ---------------------------------------------------------
+    # Metadata
+    # ---------------------------------------------------------
+    st.header("Metadata")
+    st.write(f"DEM shape: {Z_dem.shape}")
+    st.write(f"Bathymetry shape: {Z_bath.shape}")
+    
+    st.write("Coordinate ranges:")
+    st.write(f"X: {X_dem.min():.2f} → {X_dem.max():.2f}")
+    st.write(f"Y: {Y_dem.min():.2f} → {Y_dem.max():.2f}")
+
 except FileNotFoundError:
     st.error("Processed mesh file missing. Run data_processor.py first.")
-
-
-# ---------------------------------------------------------
-# Metadata
-# ---------------------------------------------------------
-
-st.header("Metadata")
-st.write(f"DEM shape: {Z_dem.shape}")
-st.write(f"Bathymetry shape: {Z_bath.shape}")
-
-st.write("Coordinate ranges:")
-st.write(f"X: {X_dem.min():.2f} → {X_dem.max():.2f}")
-st.write(f"Y: {Y_dem.min():.2f} → {Y_dem.max():.2f}")

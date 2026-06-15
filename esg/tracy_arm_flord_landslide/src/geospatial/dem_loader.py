@@ -92,7 +92,7 @@ def load_dem_array(
 
 
 def load_tracy_arm_dem(
-    base_dir: str | Path = "data/processed",
+    base_dir: Optional[str | Path] = None,
     filename: str = "tracy_arm_topobathy.tif",
     bounds: Optional[Tuple[float, float, float, float]] = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -101,9 +101,9 @@ def load_tracy_arm_dem(
 
     Parameters
     ----------
-    base_dir : str | Path, default "data/raw"
-        Base directory where DEM is stored.
-    filename : str, default "tracy_arm_dem.tif"
+    base_dir : str | Path, optional
+        Base directory where DEM is stored. Defaults to data/processed relative to file.
+    filename : str, default "tracy_arm_topobathy.tif"
         DEM filename.
     bounds : tuple[float, float, float, float], optional
         Optional geographic bounds for clipping.
@@ -114,5 +114,7 @@ def load_tracy_arm_dem(
     x : np.ndarray
     y : np.ndarray
     """
+    if base_dir is None:
+        base_dir = Path(__file__).parent.parent.parent / "data/processed"
     dem_path = Path(base_dir) / filename
     return load_dem_array(dem_path, bounds=bounds, masked=True)
