@@ -84,7 +84,7 @@ with col2:
                              showscale=False, opacity=0.3, colorscale='Reds'))
     
     fig.update_layout(title="3D Bathymetry & Hypoxia Model", margin=dict(l=0, r=0, b=0, t=40))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 # Inside your main app's display section

@@ -1,7 +1,5 @@
 import streamlit as st
-
-# Set page configuration for a professional wide-screen feel
-st.set_page_config(page_title="Project Charter | Lake Digital Twin", layout="wide")
+import os
 
 # --- Title Section ---
 st.title("🌊 Lake Health Digital Twin: Strategic Overview")
@@ -75,9 +73,9 @@ with tab3:
     # Include images from assets
     col1, col2 = st.columns(2)
     with col1:
-        st.image("data/assets/schematic_lake_digital_twin.png", caption="Project Schematic: Lake Metabolism Model")
+        st.image(os.path.join(os.path.dirname(__file__), "../data/assets/schematic_lake_digital_twin.png"), caption="Project Schematic: Lake Metabolism Model")
     with col2:
-        st.image("data/assets/chemicalprocess_lake_digital_twin.png", caption="Chemical Process: Calcium-Phosphorus Reaction")
+        st.image(os.path.join(os.path.dirname(__file__), "../data/assets/chemicalprocess_lake_digital_twin.png"), caption="Chemical Process: Calcium-Phosphorus Reaction")
 
     st.subheader("3. Current Technical Stack")
     st.write("- **Framework:** Streamlit (UI/Frontend)")

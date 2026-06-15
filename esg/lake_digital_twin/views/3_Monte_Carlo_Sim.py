@@ -37,7 +37,7 @@ if st.button("Run Simulation"):
     # Highlight the 'Risk Zone' (SI < 0)
     fig.add_vline(x=0, line_dash="dash", line_color="red", annotation_text="Risk Threshold")
     
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
     # ... after plotting the chart
