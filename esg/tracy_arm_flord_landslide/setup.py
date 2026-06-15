@@ -16,6 +16,8 @@ setup(
         "geopandas>=0.14",
         "shapely>=2.0",
         "requests>=2.31",
+        "pyproj>=3.6",
+        "pydeck>=0.8",
     ],
     python_requires=">=3.10",
 )
