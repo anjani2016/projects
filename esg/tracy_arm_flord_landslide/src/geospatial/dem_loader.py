@@ -115,6 +115,6 @@ def load_tracy_arm_dem(
     y : np.ndarray
     """
     if base_dir is None:
-        base_dir = Path(__file__).parent.parent.parent / "data/processed"
+        base_dir = Path(__file__).resolve().parent.parent.parent / "data/processed"
     dem_path = Path(base_dir) / filename
     return load_dem_array(dem_path, bounds=bounds, masked=True)

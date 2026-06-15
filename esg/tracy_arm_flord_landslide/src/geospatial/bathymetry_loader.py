@@ -59,6 +59,6 @@ def load_tracy_arm_bathymetry(
 ):
     """Convenience wrapper for standard bathymetry path."""
     if base_dir is None:
-        base_dir = Path(__file__).parent.parent.parent / "data/processed"
+        base_dir = Path(__file__).resolve().parent.parent.parent / "data/processed"
     path = Path(base_dir) / filename
     return load_bathymetry_array(path, bounds=bounds)

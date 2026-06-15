@@ -18,6 +18,7 @@ import pandas as pd
 import pydeck as pdk
 from pyproj import Transformer
 import plotly.graph_objects as go
+from pathlib import Path
 
 import os
 import sys
@@ -56,7 +57,7 @@ def get_cached_bathymetry():
 @st.cache_data
 def load_and_downsample_data():
     # Load your real processed matrix
-    path = os.path.join(os.path.dirname(__file__), "../../data/processed/tracy_arm_mesh.npy")
+    path = Path(__file__).resolve().parent.parent.parent / "data/processed/tracy_arm_mesh.npy"
     matrix = np.load(path)
     
     # Take every 5th pixel to guarantee fast UI loading times
