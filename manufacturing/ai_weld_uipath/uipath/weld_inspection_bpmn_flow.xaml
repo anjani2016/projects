@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Activity mc:Ignorable="sap sap2010 sads" x:Class="Weld_Inspection_BPMN_Flow"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_ImageFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="in_Thickness" Type="InArgument(x:Double)" />
+    <x:Property Name="in_RegulatoryCode" Type="InArgument(x:String)" />
+    <x:Property Name="in_Material" Type="InArgument(x:String)" />
+    <x:Property Name="out_ReportID" Type="OutArgument(x:String)" />
+    <x:Property Name="out_Verdict" Type="OutArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>Weld_Inspection_BPMN_Flow_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="10">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="10">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Weld Inspection BPMN Process Flow" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="apiEndpoint" />
+      <Variable x:TypeArguments="x:String" Name="jsonResponse" />
+      <Variable x:TypeArguments="x:Int32" Name="statusCode" />
+      <Variable x:TypeArguments="x:String" Name="agentReasoning" />
+      <Variable x:TypeArguments="x:Boolean" Name="hasDefects" />
+      <Variable x:TypeArguments="x:String" Name="taskDecision" />
+      <Variable x:TypeArguments="x:String" Name="taskComments" />
+      <Variable x:TypeArguments="x:String" Name="repairPlan" />
+      <Variable x:TypeArguments="x:String" Name="assignedWelder" />
+    </Sequence.Variables>
+    
+    <!-- 1. Start Event: Read Endpoint Assets -->
+    <ui:GetRobotAsset AssetName="AI_Weld_Inspector_Endpoint" DisplayName="Get API Endpoint Asset" sap2010:WorkflowViewState.IdRef="GetRobotAsset_1">
+      <ui:GetRobotAsset.Value>
+        <OutArgument x:TypeArguments="x:String">[apiEndpoint]</OutArgument>
+      </ui:GetRobotAsset.Value>
+    </ui:GetRobotAsset>
+    
+    <ui:Comment DisplayName="Comment - Start Event Ingest" Text="Process started by queue trigger. Image received and ready for AI Inspection Service Task." sap2010:WorkflowViewState.IdRef="Comment_1" />
+    
+    <!-- Loop structure representing rework loop -->
+    <ui:InterruptibleWhile DisplayName="While Weld is Rejected (Rework Loop)" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
+      <ui:InterruptibleWhile.Body>
+        <Sequence DisplayName="AI Scan &amp; Decision Sequence" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          
+          <!-- 2. Service Task: Invoke FastAPI /inspect endpoint -->
+          <ui:HttpClient Body="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" Username="{x:Null}" 
+                         DisplayName="HTTP Request - AI Inspection Service Task" 
+                         EndPoint="[apiEndpoint + &quot;/inspect&quot;]" 
+                         Method="POST" 
+                         Result="[jsonResponse]" 
+                         StatusCode="[statusCode]" sap2010:WorkflowViewState.IdRef="HttpClient_1" TimeoutMS="60000">
+            <ui:HttpClient.Headers>
+              <InArgument x:TypeArguments="x:String" x:Key="x-user-role">Robot</InArgument>
+            </ui:HttpClient.Headers>
+            <ui:HttpClient.Parameters>
+              <InArgument x:TypeArguments="x:String" x:Key="thickness">[in_Thickness.ToString()]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="model_path">weights/m60.pt</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="regulatory_code">[in_RegulatoryCode]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="material">[in_Material]</InArgument>
+              <!-- file parameter mapped in Studio body attachments -->
+            </ui:HttpClient.Parameters>
+          </ui:HttpClient>
+          
+          <!-- Deserialize Response -->
+          <ui:Comment DisplayName="Comment - Deserialize JSON" Text="JSON response deserialized. Extracting hasDefects boolean, verdict, and report_id." sap2010:WorkflowViewState.IdRef="Comment_2" />
+          
+          <!-- 3. Exclusive Gateway: Check if Defects Exist -->
+          <Flowchart DisplayName="Defect Decision Gateway" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+            <FlowDecision x:Name="DefectGateway" DisplayName="Defects Detected?" Expression="[hasDefects]" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+              
+              <!-- Case A: Pass -> Go directly to Certificate Export -->
+              <FlowDecision.False>
+                <FlowStep x:Name="AssignPass" sap2010:WorkflowViewState.IdRef="FlowStep_1">
+                  <Assign DisplayName="Set Verdict PASS" sap2010:WorkflowViewState.IdRef="Assign_1">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[out_Verdict]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">PASS</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </FlowStep>
+              </FlowDecision.False>
+              
+              <!-- Case B: Fail/Exceptions -> Escalation to Action Center -->
+              <FlowDecision.True>
+                <FlowStep x:Name="HumanReviewTask" sap2010:WorkflowViewState.IdRef="FlowStep_2">
+                  <Sequence DisplayName="Human-in-the-Loop Review" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                    
+                    <!-- Create Form Task in Action Center -->
+                    <ui:Comment DisplayName="Comment - Create Action Task" Text="Creating Form Task in Action Center: Level III NDT Compliance Review" sap2010:WorkflowViewState.IdRef="Comment_3" />
+                    
+                    <!-- Await Form Task Completion -->
+                    <ui:Comment DisplayName="Comment - Await Action Completion" Text="Process pauses here, waiting for Inspector sign-off (Approve / Reject decision + Comments)." sap2010:WorkflowViewState.IdRef="Comment_4" />
+                    
+                    <!-- 4. Exclusive Gateway: Check Inspector Decision -->
+                    <Flowchart DisplayName="Inspector Decision Gateway" sap2010:WorkflowViewState.IdRef="Flowchart_2">
+                      <FlowDecision x:Name="DecisionGateway" DisplayName="Inspector Rejected?" Expression="[taskDecision = &quot;Reject&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+                        
+                        <!-- Inspector Approved Override -> Proceed to Export -->
+                        <FlowDecision.False>
+                          <FlowStep x:Name="OverridePass" sap2010:WorkflowViewState.IdRef="FlowStep_3">
+                            <Assign DisplayName="Set Verdict PASS (Manual Override)" sap2010:WorkflowViewState.IdRef="Assign_2">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:String">[out_Verdict]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:String">PASS_OVERRIDE</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                          </FlowStep>
+                        </FlowDecision.False>
+                        
+                        <!-- Inspector Confirmed Reject -> Call Repair Agent -->
+                        <FlowDecision.True>
+                          <FlowStep x:Name="RepairPlanningTask" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+                            <Sequence DisplayName="Agentic Repair Planning" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                              
+                              <!-- 5. Service Task: Call FastAPI Repair Planner -->
+                              <ui:HttpClient Body="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" Username="{x:Null}" 
+                                             DisplayName="HTTP Request - AI Repair Planner Service" 
+                                             EndPoint="[apiEndpoint + &quot;/api/uipath/bpmn/processes/active_process/step&quot;]" 
+                                             Method="POST" 
+                                             Result="[jsonResponse]" 
+                                             StatusCode="[statusCode]" sap2010:WorkflowViewState.IdRef="HttpClient_2" TimeoutMS="30000" />
+                              
+                              <!-- Assign Welder and Plan -->
+                              <ui:Comment DisplayName="Comment - Parse Repair Plan" Text="Extracting matched welder name and action_plan text." sap2010:WorkflowViewState.IdRef="Comment_5" />
+                              
+                              <!-- 6. User Task: Welder Rework Order -->
+                              <ui:Comment DisplayName="Comment - Welder Task" Text="Form Task created in Welder Inbox containing Action Plan. Welder repairs joint and uploads radiography scan." sap2010:WorkflowViewState.IdRef="Comment_6" />
+                              
+                            </Sequence>
+                          </FlowStep>
+                        </FlowDecision.True>
+                        
+                      </FlowDecision>
+                    </Flowchart>
+                    
+                  </Sequence>
+                </FlowStep>
+              </FlowDecision.True>
+              
+            </FlowDecision>
+          </Flowchart>
+          
+        </Sequence>
+      </ui:InterruptibleWhile.Body>
+      <ui:InterruptibleWhile.Condition>[out_Verdict = "PENDING_REWORK"]</ui:InterruptibleWhile.Condition>
+    </ui:InterruptibleWhile>
+    
+    <!-- 7. Service Task: Generate Certificate & Export PDF -->
+    <ui:Comment DisplayName="Comment - Export Certificate" Text="AI Scan passes or override confirmed. Trigger final certificate generation. PDF saved to Storage Bucket." sap2010:WorkflowViewState.IdRef="Comment_7" />
+    
+    <!-- 8. End Event -->
+    <ui:Comment DisplayName="Comment - End Event" Text="Weld Inspection process terminated. Audit logs synced to MongoDB Atlas and SQLite ERP." sap2010:WorkflowViewState.IdRef="Comment_8" />
+    
+  </Sequence>
+</Activity>

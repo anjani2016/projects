@@ -5,8 +5,7 @@ setup(
     version="0.1.0",
     description="Digital Twin for Tracy Arm Fjord Landslide-Generated Tsunami Simulation",
     author="Anjani",
-    packages=find_packages(where="src"),
-    package_dir={"": "src"},
+    packages=find_packages(),
     install_requires=[
         "streamlit>=1.32",
         "numpy>=1.26",

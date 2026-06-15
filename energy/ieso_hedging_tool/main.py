@@ -9,8 +9,12 @@ import sys
 import os
 import pandas as pd
 
-# Adjust path if needed to ensure src is importable
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+# Ensure parent directory of 'energy' (grandparent of this file) is in sys.path
+# so that imports like `from energy.ieso_hedging_tool.src...` resolve correctly
+current_dir = os.path.dirname(os.path.abspath(__file__))
+grandparent_dir = os.path.abspath(os.path.join(current_dir, "..", ".."))
+if grandparent_dir not in sys.path:
+    sys.path.insert(0, grandparent_dir)
 
 # 1. Establish project-wide logging configuration before any other imports
 from energy.ieso_hedging_tool.src.core.utils import setup_logger, initialize_project

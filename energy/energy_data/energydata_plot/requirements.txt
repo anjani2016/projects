@@ -24,6 +24,8 @@ pandas
 # read excel
 # openpyxl
 # catalogue
+pytest
+pytest-mock
 
 ## snowflake
 

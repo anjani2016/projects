@@ -96,3 +96,37 @@ pnpm-debug.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# ==============================================================================
+# 6. MANUFACTURING HACKATHON REPOS
+# ==============================================================================
+# Ignore heavy files, local DBs, caches, environments and ML artifacts in hackathon folders
+manufacturing/ai_weld_*/weld_env/
+manufacturing/ai_weld_*/weld_env_old/
+manufacturing/ai_weld_*/weld_env_*/
+manufacturing/ai_weld_*/models/
+manufacturing/ai_weld_*/weights/
+manufacturing/ai_weld_*/data/
+manufacturing/ai_weld_*/logs/
+manufacturing/ai_weld_*/scratch/
+manufacturing/ai_weld_*/runs/
+manufacturing/ai_weld_*/*.db
+manufacturing/ai_weld_*/*.db-journal
+manufacturing/ai_weld_*/*.pt
+manufacturing/ai_weld_*/*.safetensors
+manufacturing/ai_weld_*/*.zip
+manufacturing/ai_weld_*/*.tar.gz
+manufacturing/ai_weld_*/*.tgz
+
+# ==============================================================================
+# 7. LARGE GEOSPATIAL DATA & TEMP ARTIFACTS
+# ==============================================================================
+esg/tracy_arm_flord_landslide/data/
+.tmp.driveupload/
+*.egg-info/
+*.npy
+*.npz
+*.tif
+*.tiff
+.claude/
+claude-partner-network/

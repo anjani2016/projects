@@ -40,6 +40,10 @@ def load_bathymetry_array(
             depth = src.read(1, masked=masked)
             transform = src.transform
 
+        # Ensure depths are negative representing subsurface bathymetry
+        if np.min(depth) >= 0 and np.max(depth) > 0:
+            depth = -np.abs(depth)
+
         h, w = depth.shape
 
         x = np.arange(w) * transform.a + transform.c + transform.a / 2

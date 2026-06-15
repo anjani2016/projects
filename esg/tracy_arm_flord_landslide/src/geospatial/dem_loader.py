@@ -93,7 +93,7 @@ def load_dem_array(
 
 def load_tracy_arm_dem(
     base_dir: str | Path = "data/processed",
-    filename: str = "tracy_arm_dem_clipped.tif",
+    filename: str = "tracy_arm_topobathy.tif",
     bounds: Optional[Tuple[float, float, float, float]] = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """

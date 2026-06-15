@@ -10,31 +10,37 @@ import dash
 from dash import dcc, html
 import plotly.express as px
     
-# This is the direct link to the 'Electricity Capacity 2026' CSV from the Open Gov portal
 def load_data():
     url = "https://www.cer-rec.gc.ca/open/energy/energyfutures2026/electricity-capacity-2026.csv"
     df = pd.read_csv(url)                                   
     return df
 
-df = load_data()                    # Load directly into your project
+def process_data(df):
+    """Filter for Canada and pivot data."""
+    df_canada = df[df['Region'] == 'Canada'].pivot_table(
+        index='Year',
+        columns='Scenario',
+        values='Value'
+    ).sort_index()
+    return df_canada
 
-# data manipulation
+def create_figure(df_canada):
+    """Create the Plotly line chart."""
+    fig = px.line(df_canada,
+                  title='Energy Futures - Canada',
+                  labels={'value': 'Energy Demand',
+                          'Year': 'Year',
+                          'variable': 'Scenario'},
+                  markers=True)
+    return fig
 
-df_canada = df[df['Region'] == 'Canada'].pivot_table(
-    index = 'Year',
-    columns ='Scenario',
-    values = 'Value'
-).sort_index()
-
-# data visualization
-
-    # 1. create the plot
-fig = px.line(df_canada,
-              title = 'Energy Futures - Canada',
-              labels = {'Value': 'Energy Demand',
-                        'Year': 'Year'},
-              markers = True)
-
+def get_layout(fig):
+    """Return the Dash app layout."""
+    return html.Div([
+        html.H1("Canada Energy Plotly Dashboard"),
+        dcc.Graph(id='main-chart',
+                  figure=fig)
+    ])
 
 # 1. Initialize the app
 app = dash.Dash(__name__)
@@ -42,12 +48,15 @@ app = dash.Dash(__name__)
 # 2. Expose the server (CRITICAL for free hosting like Render)
 server = app.server
 
-# 3. Define the layout (This is where the HTML-like structure goes)
-app.layout = html.Div([
-    html.H1("Canada Energy Plotly Dashboard"),
-    dcc.Graph(id='main-chart',
-              figure=fig)
-])
+# 3. Setup global data (for runtime)
+try:
+    df_raw = load_data()
+    df_processed = process_data(df_raw)
+    figure = create_figure(df_processed)
+    app.layout = get_layout(figure)
+except Exception as e:
+    print(f"Error loading initial data: {e}")
+    app.layout = html.Div([html.H1("Error loading data")])
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run(debug=True)

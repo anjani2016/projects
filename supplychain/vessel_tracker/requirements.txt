@@ -6,3 +6,4 @@ requests
 numpy
 shapely
 python-dotenv
+pytest

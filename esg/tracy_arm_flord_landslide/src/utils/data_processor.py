@@ -27,7 +27,35 @@ class TopobathyProcessor:
         
         os.makedirs(self.processed_dir, exist_ok=True)
 
-    def reproject_raster(self, input_filename, output_filename):
+    def merge_dem_tiles(self, tile_filenames, output_filename):
+        """
+        Mosaics multiple DEM tiles into a single TIFF.
+        """
+        from rasterio.merge import merge
+        
+        tile_paths = [os.path.join(self.raw_dir, name) for name in tile_filenames]
+        opened_files = [rasterio.open(p) for p in tile_paths]
+        try:
+            mosaic, out_trans = merge(opened_files)
+            out_meta = opened_files[0].meta.copy()
+            out_meta.update({
+                "driver": "GTiff",
+                "height": mosaic.shape[1],
+                "width": mosaic.shape[2],
+                "transform": out_trans,
+                "crs": opened_files[0].crs
+            })
+            
+            output_path = os.path.join(self.raw_dir, output_filename)
+            with rasterio.open(output_path, "w", **out_meta) as dest:
+                dest.write(mosaic)
+                
+            return output_path
+        finally:
+            for f in opened_files:
+                f.close()
+
+    def reproject_raster(self, input_filename, output_filename, resolution=30.0):
         """
         Reprojects an input raster to the target UTM Coordinate Reference System.
         """
@@ -39,7 +67,8 @@ class TopobathyProcessor:
             
         with rasterio.open(input_path) as src:
             transform, width, height = calculate_default_transform(
-                src.crs, self.target_crs, src.width, src.height, *src.bounds
+                src.crs, self.target_crs, src.width, src.height, *src.bounds,
+                resolution=resolution
             )
             metadata = src.meta.copy()
             metadata.update({
@@ -114,6 +143,11 @@ class TopobathyProcessor:
             dem_data[dem_data == dem_src.nodata] = 0.0
             bathy_data[bathy_data == bathy_src.nodata] = 0.0
             
+            # Ensure bathymetry values are negative representing subsurface depths
+            if np.min(bathy_data) >= 0 and np.max(bathy_data) > 0:
+                print("Bathymetry values detected as positive. Negating to represent subsurface depths.")
+                bathy_data = -np.abs(bathy_data.astype(np.float32))
+            
             # Merge logic: Use bathymetry where values are strictly sub-surface (< 0) 
             # and land DEM where elevation structures emerge (> 0)
             unified_topo_matrix = np.where(dem_data > 0, dem_data, bathy_data)
@@ -134,13 +168,29 @@ class TopobathyProcessor:
 if __name__ == "__main__":
     processor = TopobathyProcessor()
     try:
-        # Step 1: Reproject files
-        dem_proj = processor.reproject_raster("tracy_arm_dem.tif", "dem_utm.tif")
-        bathy_proj = processor.reproject_raster("tracy_arm_bathymetry.tif", "bathy_utm.tif")
+        # Check if individual tiles exist and merge them
+        raw_dem_57 = os.path.join(processor.raw_dir, "tracy_arm_dem_57.tif")
+        raw_dem_58 = os.path.join(processor.raw_dir, "tracy_arm_dem_58.tif")
         
+        if os.path.exists(raw_dem_57) and os.path.exists(raw_dem_58):
+            print("Real DEM tiles detected (57, 58). Merging tiles...")
+            processor.merge_dem_tiles(["tracy_arm_dem_57.tif", "tracy_arm_dem_58.tif"], "tracy_arm_dem.tif")
+            
+        # Step 1: Reproject files
+        # Reproject DEM with 30m resolution for stable simulation grid sizing
+        dem_proj = processor.reproject_raster("tracy_arm_dem.tif", "dem_utm.tif", resolution=30.0)
+        
+        # Make bathymetry reprojection optional if raw bathymetry is not present
+        bathy_raw_path = os.path.join(processor.raw_dir, "tracy_arm_bathymetry.tif")
+        if os.path.exists(bathy_raw_path):
+            bathy_proj = processor.reproject_raster("tracy_arm_bathymetry.tif", "bathy_utm.tif", resolution=30.0)
+            final_bathy = processor.clip_to_fjord(bathy_proj, "tracy_arm_bathymetry_clipped.tif")
+        else:
+            print("Raw bathymetry file missing. Using pre-processed bathymetry...")
+            final_bathy = os.path.join(processor.processed_dir, "tracy_arm_bathymetry_clipped.tif")
+            
         # Step 2: Clip to exact bounding window parameters
         final_dem = processor.clip_to_fjord(dem_proj, "tracy_arm_dem_clipped.tif")
-        final_bathy = processor.clip_to_fjord(bathy_proj, "tracy_arm_bathymetry_clipped.tif")
         
         # Step 3: Align resolutions and build array matrix
         processor.generate_unified_mesh(final_dem, final_bathy)

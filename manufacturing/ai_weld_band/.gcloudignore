@@ -1,0 +1,16 @@
+# Exclude files from Google Cloud Build upload
+.gcloudignore
+.git
+.gitignore
+weld_env/
+weld_env_old/
+models/
+data/
+logs/
+scratch/
+tests/
+.pytest_cache/
+.DS_Store
+*.log
+*.pdf
+*.db

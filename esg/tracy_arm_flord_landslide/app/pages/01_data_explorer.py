@@ -17,6 +17,14 @@ import numpy as np
 import pandas as pd
 import pydeck as pdk
 from pyproj import Transformer
+import plotly.graph_objects as go
+
+import os
+import sys
+# Ensure project root is in sys.path so that 'src' imports work when deployed
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+if root_dir not in sys.path:
+    sys.path.insert(0, root_dir)
 
 from src.geospatial.dem_loader import load_tracy_arm_dem
 from src.geospatial.bathymetry_loader import load_tracy_arm_bathymetry
@@ -34,7 +42,6 @@ st.write("Inspect the fjord geometry before running simulations.")
 # ---------------------------------------------------------
 
 st.header("Unified 3D Topobathymetric Map")
-st.info("Loading and converting coordinates... this may take a few seconds.")
 
 @st.cache_data
 def get_cached_dem():
@@ -46,87 +53,51 @@ def get_cached_bathymetry():
     bath, x_bath, y_bath = load_tracy_arm_bathymetry()
     return build_structured_mesh(bath, x_bath, y_bath)
 
-X_dem, Y_dem, Z_dem = get_cached_dem()
-X_bath, Y_bath, Z_bath = get_cached_bathymetry()
-
-# Helper function to downsample and convert to pydeck DataFrame
 @st.cache_data
-def prepare_3d_data(_X, _Y, _Z, is_bathy=False, step=15):
-    X_sub = _X[::step, ::step].flatten()
-    Y_sub = _Y[::step, ::step].flatten()
-    Z_sub = _Z[::step, ::step].flatten()
+def load_and_downsample_data():
+    # Load your real processed matrix
+    matrix = np.load("data/processed/tracy_arm_mesh.npy")
     
-    # Filter NoData / Zeros
-    if is_bathy:
-        mask = Z_sub < 0
-    else:
-        mask = Z_sub > 0
-        
-    X_sub = X_sub[mask]
-    Y_sub = Y_sub[mask]
-    Z_sub = Z_sub[mask]
+    # Take every 5th pixel to guarantee fast UI loading times
+    stride = 5
+    return matrix[::stride, ::stride]
+
+try:
+    with st.spinner("Loading and converting coordinates... this may take a few seconds."):
+        X_dem, Y_dem, Z_dem = get_cached_dem()
+        X_bath, Y_bath, Z_bath = get_cached_bathymetry()
+        z_data = load_and_downsample_data()
     
-    # Convert UTM to WGS84
-    transformer = Transformer.from_crs("epsg:26908", "epsg:4326", always_xy=True)
-    lon, lat = transformer.transform(X_sub, Y_sub)
+    # Create coordinate grids based on matrix shape
+    x = np.arange(z_data.shape[1])
+    y = np.arange(z_data.shape[0])
     
-    df = pd.DataFrame({'lon': lon, 'lat': lat, 'elevation': Z_sub})
+    # Construct a high-performance continuous 3D surface mesh
+    fig = go.Figure(data=[go.Surface(
+        z=z_data, 
+        x=x, 
+        y=y,
+        colorscale='Earth',  # Beautiful natural rendering for land vs water
+        cmin=-500,           # Caps the ocean depths color scale
+        cmax=1500            # Caps the mountain peak color scale
+    )])
     
-    # Color mapping
-    if len(df) > 0:
-        z_min, z_max = df['elevation'].min(), df['elevation'].max()
-        norm = (df['elevation'] - z_min) / (z_max - z_min + 1e-5)
-        if is_bathy:
-            # Deep blue to light blue
-            df['r'] = 0
-            df['g'] = (100 + 100 * norm).astype(int)
-            df['b'] = (150 + 105 * norm).astype(int)
-        else:
-            # Green to white for mountains
-            df['r'] = (50 + 205 * norm).astype(int)
-            df['g'] = (150 + 105 * norm).astype(int)
-            df['b'] = (50 + 205 * norm).astype(int)
-            
-    return df
+    fig.update_layout(
+        title="Unified 3D Topobathymetric Surface Mesh",
+        scene=dict(
+            xaxis_title="X Grid (Downsampled)",
+            yaxis_title="Y Grid (Downsampled)",
+            zaxis_title="Elevation / Depth (m)",
+            aspectratio=dict(x=1, y=1, z=0.3) # Flattens vertical exaggeration to look realistic
+        ),
+        margin=dict(l=0, r=0, b=0, t=40),
+        template="plotly_dark"
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
 
-df_dem = prepare_3d_data(X_dem, Y_dem, Z_dem, is_bathy=False, step=15)
-df_bath = prepare_3d_data(X_bath, Y_bath, Z_bath, is_bathy=True, step=15)
-
-dem_layer = pdk.Layer(
-    "PointCloudLayer",
-    data=df_dem,
-    get_position=["lon", "lat", "elevation"],
-    get_color=["r", "g", "b", 255],
-    point_size=5,
-    pickable=True,
-)
-
-bathy_layer = pdk.Layer(
-    "PointCloudLayer",
-    data=df_bath,
-    get_position=["lon", "lat", "elevation"],
-    get_color=["r", "g", "b", 255],
-    point_size=5,
-    pickable=True,
-)
-
-# Set initial view state centered on the fjord
-view_state = pdk.ViewState(
-    latitude=df_dem['lat'].mean(),
-    longitude=df_dem['lon'].mean(),
-    zoom=10,
-    pitch=50,
-    bearing=0
-)
-
-deck = pdk.Deck(
-    layers=[dem_layer, bathy_layer],
-    initial_view_state=view_state,
-    map_style="https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
-    tooltip={"text": "Elevation: {elevation} m"}
-)
-
-st.pydeck_chart(deck, use_container_width=True)
+except FileNotFoundError:
+    st.error("Processed mesh file missing. Run data_processor.py first.")
 
 
 # ---------------------------------------------------------
@@ -138,5 +109,5 @@ st.write(f"DEM shape: {Z_dem.shape}")
 st.write(f"Bathymetry shape: {Z_bath.shape}")
 
 st.write("Coordinate ranges:")
-st.write(f"X: {x_dem.min():.2f} → {x_dem.max():.2f}")
-st.write(f"Y: {y_dem.min():.2f} → {y_dem.max():.2f}")
+st.write(f"X: {X_dem.min():.2f} → {X_dem.max():.2f}")
+st.write(f"Y: {Y_dem.min():.2f} → {Y_dem.max():.2f}")

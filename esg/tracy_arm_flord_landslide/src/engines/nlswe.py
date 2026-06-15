@@ -39,12 +39,32 @@ def initialize_state(Z: np.ndarray, eta0: np.ndarray):
     return h, u, v
 
 
-def compute_time_step(X: np.ndarray, Y: np.ndarray, h: np.ndarray, params: NLSWEParameters) -> float:
-    """Compute stable dt using CFL condition."""
+def compute_time_step(
+    X: np.ndarray,
+    Y: np.ndarray,
+    h: np.ndarray,
+    params: NLSWEParameters,
+    u: np.ndarray | None = None,
+    v: np.ndarray | None = None
+) -> float:
+    """Compute stable dt using CFL condition with velocity safety bounds."""
     dx = np.mean(np.diff(X[0, :]))
     dy = np.mean(np.diff(Y[:, 0]))
+    
+    # Wave speed c = sqrt(g * h)
     c = np.sqrt(params.g * np.maximum(h, params.min_depth))
-    return params.cfl * min(dx, dy) / (np.max(c) + 1e-6)
+    
+    # If velocity fields are provided, add local fluid velocities to celerity calculation
+    if u is not None and v is not None:
+        c += np.sqrt(u**2 + v**2)
+        
+    dt = params.cfl * min(dx, dy) / (np.max(c) + 1e-6)
+    
+    # Safeguard against NaN or infinite loops due to extreme instabilities
+    if np.isnan(dt) or dt < 1e-4:
+        return 0.1  # Safe fallback step in seconds
+        
+    return dt
 
 
 # ---------------------------------------------------------
@@ -77,13 +97,17 @@ def step_nlswe(
 
     i = slice(1, -1)
     j = slice(1, -1)
+    ip1 = slice(2, None)
+    im1 = slice(0, -2)
+    jp1 = slice(2, None)
+    jm1 = slice(0, -2)
 
     # Derivatives
-    d_eta_dx = (eta[i, j+1] - eta[i, j-1]) / (2 * dx)
-    d_eta_dy = (eta[i+1, j] - eta[i-1, j]) / (2 * dy)
+    d_eta_dx = (eta[i, jp1] - eta[i, jm1]) / (2 * dx)
+    d_eta_dy = (eta[ip1, j] - eta[im1, j]) / (2 * dy)
 
-    d_uh_dx = ((u[i, j+1] * h[i, j+1]) - (u[i, j-1] * h[i, j-1])) / (2 * dx)
-    d_vh_dy = ((v[i+1, j] * h[i+1, j]) - (v[i-1, j] * h[i-1, j])) / (2 * dy)
+    d_uh_dx = ((u[i, jp1] * h[i, jp1]) - (u[i, jm1] * h[i, jm1])) / (2 * dx)
+    d_vh_dy = ((v[ip1, j] * h[ip1, j]) - (v[im1, j] * h[im1, j])) / (2 * dy)
 
     # Continuity
     eta_new[i, j] = eta[i, j] - dt * (d_uh_dx + d_vh_dy)
@@ -121,7 +145,7 @@ def run_simulation(
     next_output = 0.0
 
     while t < t_final:
-        dt = compute_time_step(X, Y, h, params)
+        dt = compute_time_step(X, Y, h, params, u, v)
         if t + dt > t_final:
             dt = t_final - t
 

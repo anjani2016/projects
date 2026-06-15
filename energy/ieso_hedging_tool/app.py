@@ -1,3 +1,14 @@
+import os
+import sys
+
+# Ensure parent directory of 'energy' (grandparent of this file) is in sys.path
+# so that imports like `from energy.ieso_hedging_tool.src...` resolve correctly
+# both when running locally or deployed on Streamlit Cloud.
+current_dir = os.path.dirname(os.path.abspath(__file__))
+grandparent_dir = os.path.abspath(os.path.join(current_dir, "..", ".."))
+if grandparent_dir not in sys.path:
+    sys.path.insert(0, grandparent_dir)
+
 import logging
 import streamlit as st
 from energy.ieso_hedging_tool.src.core.utils import setup_logger, initialize_project, add_sidebar_branding, add_sidebar_footer
