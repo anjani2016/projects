@@ -14,7 +14,6 @@ geopandas>=0.14.0
 # Data Management & Parquet Support
 pandas>=2.0.0
 pyarrow>=14.0.0
-fiona>=1.9.0
 shapely>=2.0.0
 
 # Mathematical Simulations
