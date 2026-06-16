@@ -1,2 +1,3 @@
 -r manufacturing/ai_weld_rt_train/requirements.txt
 -r esg/tracy_arm_flord_landslide/requirements.txt
+-r energy/ontario_grid_twin/requirements.txt

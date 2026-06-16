@@ -1,6 +1,6 @@
 import os
 import pytest
-from app import load_all_layers # Importing your function to test it
+
 
 def test_data_paths_exist():
     """

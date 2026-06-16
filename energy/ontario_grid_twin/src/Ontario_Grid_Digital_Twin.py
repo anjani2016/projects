@@ -1,3 +1,16 @@
+import sys
+from pathlib import Path
+
+# Add the directory containing the 'energy' folder to sys.path
+current_dir = Path(__file__).resolve().parent
+while current_dir.name and not (current_dir / "energy").exists():
+    if current_dir == current_dir.parent:
+        break
+    current_dir = current_dir.parent
+
+if (current_dir / "energy").exists() and str(current_dir) not in sys.path:
+    sys.path.insert(0, str(current_dir))
+
 import streamlit as st
 from energy.ontario_grid_twin.src.engine.data_loader import load_base_grid, load_dc_projects, get_grid_nodes
 from energy.ontario_grid_twin.src.utils.ui_branding import apply_branding

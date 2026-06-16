@@ -1,3 +1,16 @@
+import sys
+from pathlib import Path
+
+# Add the directory containing the 'energy' folder to sys.path
+current_dir = Path(__file__).resolve().parent
+while current_dir.name and not (current_dir / "energy").exists():
+    if current_dir == current_dir.parent:
+        break
+    current_dir = current_dir.parent
+
+if (current_dir / "energy").exists() and str(current_dir) not in sys.path:
+    sys.path.insert(0, str(current_dir))
+
 import streamlit as st
 import pydeck as pdk
 import pandas as pd
