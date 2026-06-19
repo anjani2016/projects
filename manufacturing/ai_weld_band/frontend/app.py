@@ -186,77 +186,76 @@ if page == "🚀 Project Charter & Architecture":
             edge [color="#94a3b8", fontname="Helvetica", fontcolor="#94a3b8", fontsize=9]
 
             Inspector [label="Inspector\\n(Streamlit UI)", shape=ellipse, fillcolor="#1a1e26"]
-            API       [label="FastAPI Backend\\nPOST /inspect", fillcolor="#2e3748"]
+            API       [label="FastAPI Backend\\nPOST /inspect/band", fillcolor="#2e3748"]
             { rank=same; Inspector; API }
 
-            subgraph cluster_agent {
-                label = "AI Agent Orchestrator (Gemini / Claude)"
-                color = "#38bdf8"
-                fontcolor = "#38bdf8"
+            subgraph cluster_band_hub {
+                label = "Band.ai Multi-Agent Platform (Room Hub)"
+                color = "#00d2ff"
+                fontcolor = "#00d2ff"
                 style = "rounded"
-                Orchestrator [label="InspectionOrchestrator\\n(use_cases layer)", fillcolor="#1e3a5f"]
+                Room [label="Band Room\\nWebSocket / REST Session", color="#00d2ff", fillcolor="#1e3a5f"]
             }
 
-            PreProc [label="3: WeldProcessor\\n(CLAHE Enhancement)", color="#6366f1", fillcolor="#1e293b"]
-
-            subgraph cluster_parallel_tools {
-                label = "Parallel Tool Invocations (4a + 4b run concurrently)"
-                color = "#6366f1"
-                fontcolor = "#a5b4fc"
+            subgraph cluster_band_agents {
+                label = "Remote Agent Listeners (WebSocket Connected)"
+                color = "#8b5cf6"
+                fontcolor = "#c084fc"
                 style = "dashed"
-                Vision  [label="4a: VisionPort\\n(RT-DETR / YOLO)", color="#6366f1"]
-                Rules   [label="4b: CompliancePort\\n(ASME / AWS / API + Client Spec)", color="#6366f1"]
-                { rank=same; Vision; Rules }
+                OrchAgent  [label="🤖 Weld Orchestrator Agent\\n(Gemini 2.5 Flash / Coordinator)", color="#8b5cf6", fillcolor="#2e1065"]
+                VisAgent   [label="👁️ Weld Vision Agent\\n(RT-DETR / YOLOv11x inference)", color="#8b5cf6", fillcolor="#2e1065"]
+                CompAgent  [label="📜 Weld Compliance Agent\\n(ASME/AWS rules engine)", color="#8b5cf6", fillcolor="#2e1065"]
+                RevAgent   [label="🔒 Weld Review Agent\\n(HITL Safety Overrides)", color="#8b5cf6", fillcolor="#2e1065"]
+                { rank=same; OrchAgent; VisAgent; CompAgent; RevAgent }
             }
 
-            Reasoning [label="5: LLM Reasoning Engine\\n(Synthesise Verdict - waits for 4a + 4b)", fillcolor="#1e3a5f"]
+            PreProc [label="WeldProcessor\\n(CLAHE Enhancement)", color="#6366f1", fillcolor="#1e293b"]
 
             subgraph cluster_db {
-                label = "Database Layer - Parallel Writes (6a + 6b + 6c run concurrently)"
+                label = "Database & Audit Logging"
                 color = "#10b981"
                 fontcolor = "#6ee7b7"
                 style = "rounded"
-                DBPort   [label="6: MongoAdapter", color="#10b981", fillcolor="#0f2d1e"]
-                MongoDB  [label="6a: MongoDB Atlas\\n(Primary - cloud write)", shape=cylinder, fillcolor="#0f2d1e", color="#10b981"]
-                AuditLog [label="6b: Audit Event Log\\n(immutable trail)",    shape=note,     fillcolor="#0f2d1e", color="#10b981"]
-                SQLite   [label="6c: SQLite\\n(Failover write)",               shape=cylinder, fillcolor="#0f2d1e", color="#10b981"]
+                DBPort   [label="MongoAdapter", color="#10b981", fillcolor="#0f2d1e"]
+                MongoDB  [label="MongoDB Atlas\\n(Primary cloud write)", shape=cylinder, fillcolor="#0f2d1e", color="#10b981"]
+                AuditLog [label="Audit Event Log\\n(immutable trail)",    shape=note,     fillcolor="#0f2d1e", color="#10b981"]
+                SQLite   [label="SQLite\\n(Local Failover)",               shape=cylinder, fillcolor="#0f2d1e", color="#10b981"]
                 { rank=same; MongoDB; AuditLog; SQLite }
             }
 
             Inspector2 [label="Inspector\\n(Receives Verdict + Image)", shape=ellipse, fillcolor="#1a1e26"]
 
             subgraph cluster_pdf {
-                label = "On-Demand PDF Generation - Parallel Inputs (8a + 8b)"
+                label = "On-Demand PDF Generation"
                 color = "#f59e0b"
                 fontcolor = "#fde68a"
                 style = "dashed"
-                Reporter [label="8: ReporterTool\\n(fpdf2 PDF Builder)", color="#f59e0b"]
+                Reporter [label="ReporterTool\\n(fpdf2 PDF Builder)", color="#f59e0b"]
                 PDF0     [label="Stage 0 PDF Report\\n(No signatures)", fillcolor="#1a1e26"]
                 { rank=same; Reporter; PDF0 }
             }
 
             Inspector    -> API          [label="1: Upload Image + Inspection Params", color="#38bdf8", fontcolor="#38bdf8"]
-            API          -> Orchestrator [label="2: Dispatch Job",                     color="#38bdf8", fontcolor="#38bdf8"]
-            Orchestrator -> PreProc      [label="3: Enhance Image (must complete first)", color="#38bdf8", fontcolor="#38bdf8"]
+            API          -> Room         [label="2: Init Chat & Invite Agents",          color="#00d2ff", fontcolor="#00d2ff"]
+            Room         -> OrchAgent    [label="3: Dispatch Trigger",                   color="#00d2ff", fontcolor="#00d2ff"]
+            
+            OrchAgent    -> PreProc      [label="4: Enhance Image (CLAHE)",              color="#8b5cf6", fontcolor="#8b5cf6"]
+            OrchAgent    -> VisAgent     [label="5: Call detect_defects tool",           color="#8b5cf6", fontcolor="#8b5cf6"]
+            OrchAgent    -> CompAgent    [label="6: Call compliance_check tool",         color="#8b5cf6", fontcolor="#8b5cf6"]
+            OrchAgent    -> RevAgent     [label="7: Call save_record tool",              color="#8b5cf6", fontcolor="#8b5cf6"]
 
-            PreProc -> Vision [label="4a: Detect Defects (parallel)",          color="#a5b4fc", fontcolor="#a5b4fc"]
-            PreProc -> Rules  [label="4b: Query Acceptance Criteria (parallel)", color="#a5b4fc", fontcolor="#a5b4fc"]
+            RevAgent     -> DBPort       [label="8: Persist Record",                    color="#10b981", fontcolor="#10b981"]
+            DBPort       -> MongoDB      [label="8a: Write Primary Record",              color="#10b981", fontcolor="#10b981"]
+            DBPort       -> AuditLog     [label="8b: Write Audit Event Log",             color="#10b981", fontcolor="#10b981"]
+            DBPort       -> SQLite       [label="8c: SQLite Failover write (if offline)", style=dashed, color="#10b981", fontcolor="#10b981"]
 
-            Vision  -> Reasoning [label="4a return: BBoxes, Classes, Dims",    style=dashed, color="#6366f1", fontcolor="#6366f1"]
-            Rules   -> Reasoning [label="4b return: Pass/Fail Thresholds",      style=dashed, color="#6366f1", fontcolor="#6366f1"]
+            OrchAgent    -> Room         [label="9: Send JSON report back to Chat",      color="#00d2ff", fontcolor="#00d2ff"]
+            Room         -> API          [label="10: Retrieve orchestrator final msg",   color="#00d2ff", fontcolor="#00d2ff"]
+            API          -> Inspector2   [label="11: JSON Response + Base64 Image",      color="#38bdf8", fontcolor="#38bdf8"]
 
-            Reasoning -> DBPort [label="5: Persist InspectionRecord", color="#38bdf8", fontcolor="#38bdf8"]
-
-            DBPort -> MongoDB  [label="6a: Write Record (primary)",      color="#10b981", fontcolor="#10b981"]
-            DBPort -> AuditLog [label="6b: Write Audit Event",           color="#10b981", fontcolor="#10b981"]
-            DBPort -> SQLite   [label="6c: Write Failover (if needed)",  style=dashed, color="#10b981", fontcolor="#10b981"]
-
-            Reasoning    -> API        [label="7: Return Verdict + Annotated Image", color="#38bdf8", fontcolor="#38bdf8"]
-            API          -> Inspector2 [label="8: JSON Response + Base64 Image",     color="#38bdf8", fontcolor="#38bdf8"]
-
-            Inspector2 -> Reporter [label="8a: Request PDF (Stage 0) (parallel)",   color="#f59e0b", fontcolor="#f59e0b"]
-            DBPort     -> Reporter [label="8b: Read Record from DB (parallel)",       color="#f59e0b", fontcolor="#f59e0b"]
-            Reporter   -> PDF0     [label="9: Compile Stage-Gated PDF",               color="#f59e0b", fontcolor="#f59e0b"]
+            Inspector2   -> Reporter     [label="12a: Request PDF (Stage 0)",            color="#f59e0b", fontcolor="#f59e0b"]
+            DBPort       -> Reporter     [label="12b: Read Record from DB",              color="#f59e0b", fontcolor="#f59e0b"]
+            Reporter     -> PDF0         [label="13: Compile Stage-Gated PDF",           color="#f59e0b", fontcolor="#f59e0b"]
         }
         """
         st.graphviz_chart(dot_phase1)
