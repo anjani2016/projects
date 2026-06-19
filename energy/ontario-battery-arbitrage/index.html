@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoltShift Ontario - Home Battery ULO Arbitrage Calculator</title>
+    <meta name="description" content="Calculate your annual savings and payback period when installing a home battery under Ontario's Ultra-Low Overnight (ULO) electricity rate plan.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Novus.ai Analytics SDK (Hackathon Requirement) -->
+    <!-- Developers: Paste your actual Novus tracking code here before submission -->
+    <script>
+        console.log("Novus.ai SDK Loaded - Active tracking initiated for VoltShift Ontario.");
+    </script>
+</head>
+<body>
+    <div class="glow-container">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <!-- Main Wizard Wrapper -->
+    <div class="wizard-container">
+        <!-- Brand Header -->
+        <header class="wizard-header">
+            <div class="brand">
+                <i class="fa-solid fa-bolt-lightning brand-icon"></i>
+                <div class="brand-text">
+                    <h1>VoltShift</h1>
+                    <span>Ontario ULO Arbitrage Planner</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Wizard Navigation Tabs -->
+        <nav class="wizard-nav-tabs">
+            <button class="nav-tab active" data-step="1" id="nav-tab-1">
+                <span class="tab-num">1</span>
+                <span class="tab-label">Consumption Inputs</span>
+            </button>
+            <button class="nav-tab" data-step="2" id="nav-tab-2">
+                <span class="tab-num">2</span>
+                <span class="tab-label">Choose Battery</span>
+            </button>
+            <button class="nav-tab" data-step="3" id="nav-tab-3">
+                <span class="tab-num">3</span>
+                <span class="tab-label">ROI Forecast</span>
+            </button>
+            <button class="nav-tab" data-step="4" id="nav-tab-4">
+                <span class="tab-num">4</span>
+                <span class="tab-label">Implementation</span>
+            </button>
+        </nav>
+
+        <!-- STEP 1: ONBOARDING & INPUTS -->
+        <section id="step-1" class="wizard-step active">
+            <div class="welcome-hero">
+                <h2>Optimize Your Energy Bills with Smart Arbitrage</h2>
+                <p>Ontario's Ultra-Low Overnight (ULO) rate plan offers electricity at just <strong>3.9¢/kWh</strong> overnight, while weekday peak hours cost <strong>39.1¢/kWh</strong>. By charging a home battery at night and discharging it to power your home during the day, you can save hundreds. Let's find your ideal setup.</p>
+            </div>
+
+            <div class="inputs-grid">
+                <!-- Bill Analyzer -->
+                <div class="glass-card flex-column gap-1">
+                    <h3><i class="fa-solid fa-file-invoice-dollar text-teal"></i> 1. Enter Your Energy Consumption</h3>
+                    <p class="section-desc">Upload a past bill image to automatically scan units, or enter them manually.</p>
+                    
+                    <div class="file-upload-container">
+                        <label class="file-upload-zone" id="upload-zone" for="bill-upload">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span id="upload-text">Upload Bill Image (OCR Scan)</span>
+                            <span class="input-subtitle">Extracts kWh consumption units</span>
+                            <input type="file" id="bill-upload" accept="image/*" style="display:none;">
+                        </label>
+                        <div class="ocr-scanning-loader" id="ocr-loader" style="display:none;">
+                            <div class="scanner-bar"></div>
+                            <span class="scanning-text"><i class="fa-solid fa-arrows-spin fa-spin text-purple"></i> Scanning bill for kWh units...</span>
+                        </div>
+                    </div>
+
+                    <div class="control-wrapper">
+                        <label for="bill-input-type">Consumption Input Type</label>
+                        <select id="bill-input-type" class="select-input">
+                            <option value="total">Total Monthly Consumption (kWh)</option>
+                            <option value="peak">Peak Period Only Consumption (4 PM - 9 PM) (kWh)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-wrapper">
+                        <label id="bill-inputs-title">Input Manual Past Months (kWh)</label>
+                        <div class="manual-bill-grid">
+                            <div class="bill-input-box">
+                                <span class="bill-input-label">Month 1</span>
+                                <input type="number" id="bill-m1" value="930" min="100" max="3000" class="manual-bill-input">
+                            </div>
+                            <div class="bill-input-box">
+                                <span class="bill-input-label">Month 2</span>
+                                <input type="number" id="bill-m2" value="880" min="100" max="3000" class="manual-bill-input">
+                            </div>
+                            <div class="bill-input-box">
+                                <span class="bill-input-label">Month 3</span>
+                                <input type="number" id="bill-m3" value="890" min="100" max="3000" class="manual-bill-input">
+                            </div>
+                        </div>
+                        <div class="daily-avg-badge">
+                            <span>Computed Daily Avg:</span>
+                            <span class="value-display"><strong id="bill-avg-display">30.0</strong> kWh</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Installation Space Check & EV Option -->
+                <div class="glass-card flex-column gap-1">
+                    <h3><i class="fa-solid fa-ruler-combined text-purple"></i> 2. Input Space & EV Parameters</h3>
+                    <p class="section-desc">Specify the physical space available for the battery installation and smart charging settings.</p>
+
+                    <div class="space-input-grid">
+                        <div class="space-input-box">
+                            <label for="space-width">Width (cm)</label>
+                            <div class="input-unit-wrapper">
+                                <input type="number" id="space-width" min="10" max="300" value="100" class="space-input">
+                            </div>
+                        </div>
+                        <div class="space-input-box">
+                            <label for="space-depth">Depth (cm)</label>
+                            <div class="input-unit-wrapper">
+                                <input type="number" id="space-depth" min="5" max="100" value="30" class="space-input">
+                            </div>
+                        </div>
+                        <div class="space-input-box">
+                            <label for="space-height">Height (cm)</label>
+                            <div class="input-unit-wrapper">
+                                <input type="number" id="space-height" min="10" max="300" value="120" class="space-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-wrapper toggle-wrapper mt-auto">
+                        <div class="toggle-info">
+                            <label for="shift-ev"><i class="fa-solid fa-car-side text-blue"></i> Shift EV Charging</label>
+                            <p class="input-subtitle">Charge EV overnight on ULO rates (Saves extra 3,000 kWh/yr)</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="shift-ev" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button to Step 2 -->
+            <div class="submit-action-bar">
+                <button id="btn-find-batteries" class="action-btn">
+                    Find Compatible Batteries <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- STEP 2: BATTERY SELECTION -->
+        <section id="step-2" class="wizard-step">
+            <div class="step-header">
+                <span class="step-badge">Step 2 of 3</span>
+                <h2>Select a Hardware Solution</h2>
+                <p>Based on your peak weekday usage, the recommended battery size is displayed below. Choose a model that fits your space constraints to calculate your specific financial yield.</p>
+            </div>
+
+            <!-- Energy Summary Card -->
+            <div class="glass-card energy-summary-card">
+                <h3><i class="fa-solid fa-bolt text-teal"></i> Your Energy Profile Summary</h3>
+                <div class="summary-stats-grid">
+                    <div class="summary-stat-item">
+                        <span>Avg Monthly Consumption:</span>
+                        <strong id="summary-monthly-load">-- kWh</strong>
+                    </div>
+                    <div class="summary-stat-item">
+                        <span>Avg Daily Consumption:</span>
+                        <strong id="summary-daily-load">-- kWh</strong>
+                    </div>
+                    <div class="summary-stat-item">
+                        <span>Peak Period Consumption (4 PM - 9 PM):</span>
+                        <strong id="summary-peak-load">-- kWh / day</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2>Market Battery Options</h2>
+                    <div class="card-actions">
+                        <span class="badge badge-purple" id="sizing-suggestion">Suggested Size: -- kWh</span>
+                    </div>
+                </div>
+                <div class="market-recommendations-grid" id="market-batteries-grid">
+                    <!-- Dynamically filled with battery cards -->
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button class="btn-back text-btn" id="btn-back-to-step-1"><i class="fa-solid fa-arrow-left"></i> Back to Inputs</button>
+            </div>
+        </section>
+
+        <!-- STEP 3: ROI DASHBOARD -->
+        <section id="step-3" class="wizard-step">
+            <div class="step-header">
+                <span class="step-badge">Step 3 of 3</span>
+                <h2>Your Financial ROI Analysis</h2>
+                <p>Review the 10-year cumulative cash flow, payback period, and annual yield calculated specifically for your selected battery package.</p>
+            </div>
+
+            <!-- Ratio Summary Sentence -->
+            <div class="ratio-statement-banner" id="ratio-statement-box">
+                <i class="fa-solid fa-circle-info"></i>
+                <span id="ratio-statement-text">Loading battery sizing comparisons...</span>
+            </div>
+
+            <!-- Main ROI Analysis Grid -->
+            <div class="roi-analysis-grid">
+                <!-- ROI Chart (Left Column) -->
+                <div class="glass-card chart-card">
+                    <div class="card-header">
+                        <h2>30-Year Cumulative Savings Cash Flow</h2>
+                        <div class="card-actions">
+                            <span class="badge badge-teal">ROI Forecast (30 Yrs)</span>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="roi-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Metrics & Parameters (Right Column Stacked) -->
+                <div class="flex-column gap-1">
+                    <!-- Savings Boxes (Right Column, Stacked) -->
+                    <div class="stats-column">
+                        <div class="stat-card">
+                            <span class="stat-label">Estimated Annual Savings</span>
+                            <div class="stat-value" id="stat-annual-savings">$0</div>
+                            <span class="stat-delta text-green" id="stat-comparison-tou"><i class="fa-solid fa-arrow-trend-up"></i> +$0 vs standard TOU</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Investment Payback Period</span>
+                            <div class="stat-value" id="stat-payback">0 Years</div>
+                            <span class="stat-delta" id="stat-roi-pct">0% ROI</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">30-Year Net Returns</span>
+                            <div class="stat-value text-teal" id="stat-10yr-net">$0</div>
+                            <span class="stat-delta" id="stat-lifetime-savings">Lifetime yield metrics</span>
+                        </div>
+                    </div>
+
+                    <!-- Custom Parameters / Tweak panel -->
+                    <div class="glass-card flex-column gap-1">
+                        <h3><i class="fa-solid fa-sliders text-teal"></i> Fine-Tune Specifications</h3>
+                        <p class="section-desc">Adjust the parameters of your selection below to simulate custom settings:</p>
+                        
+                        <div class="control-wrapper">
+                            <div class="control-header">
+                                <label for="battery-capacity">Capacity</label>
+                                <span class="value-display"><span id="capacity-val">13.5</span> kWh</span>
+                            </div>
+                            <input type="range" id="battery-capacity" min="3" max="40" step="0.5" value="13.5">
+                        </div>
+
+                        <div class="control-wrapper">
+                            <div class="control-header">
+                                <label for="battery-efficiency">Efficiency</label>
+                                <span class="value-display"><span id="efficiency-val">90</span> %</span>
+                            </div>
+                            <input type="range" id="battery-efficiency" min="70" max="98" step="1" value="90">
+                        </div>
+
+                        <div class="control-wrapper">
+                            <div class="control-header">
+                                <label for="battery-degradation">Annual Degradation</label>
+                                <span class="value-display"><span id="degradation-val">2.0</span> %</span>
+                            </div>
+                            <input type="range" id="battery-degradation" min="0.0" max="10.0" step="0.1" value="2.0">
+                        </div>
+
+                        <div class="control-wrapper">
+                            <div class="control-header">
+                                <label for="installed-cost">Net Cost (CAD)</label>
+                                <span class="value-display">$<span id="cost-val">14,500</span></span>
+                            </div>
+                            <input type="range" id="installed-cost" min="3000" max="30000" step="250" value="14500">
+                        </div>
+
+                        <!-- Hidden helper input for daily load to link logic -->
+                        <input type="hidden" id="daily-load" value="30">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Table -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2>Detailed Arbitrage & Lifecycle Payoff</h2>
+                </div>
+                <div class="detailed-metrics-table">
+                    <div class="table-row header-row">
+                        <span>Metric Name</span>
+                        <span>Value</span>
+                        <span>Details</span>
+                    </div>
+                    <div class="table-row">
+                        <strong><i class="fa-solid fa-moon text-teal"></i> Overnight Charging Cost</strong>
+                        <span id="detail-charge-cost">$0 / yr</span>
+                        <span class="table-desc">Annual cost to charge battery at overnight ULO rate (3.9¢/kWh)</span>
+                    </div>
+                    <div class="table-row">
+                        <strong><i class="fa-solid fa-sun text-amber"></i> Peak Demand Avoidance Savings</strong>
+                        <span id="detail-avoidance-savings">$0 / yr</span>
+                        <span class="table-desc">Annual bills reduced by discharging during On-Peak hours (39.1¢/kWh)</span>
+                    </div>
+                    <div class="table-row">
+                        <strong><i class="fa-solid fa-car-side text-blue"></i> EV Smart Charging Yield</strong>
+                        <span id="detail-ev-yield">$0 / yr</span>
+                        <span class="table-desc">Direct savings by shifting 3,000 kWh of EV charging to overnight rate</span>
+                    </div>
+                    <div class="table-row">
+                        <strong><i class="fa-solid fa-circle-notch text-purple"></i> Projected Lifecycle Limit</strong>
+                        <span id="detail-cycle-limit">-- Years</span>
+                        <span class="table-desc" id="detail-cycle-desc">Based on battery capacity, daily usage, and rated cycles of life</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation-buttons flex-row justify-between">
+                <button class="btn-back text-btn" id="btn-back-to-step-2"><i class="fa-solid fa-arrow-left"></i> Back to Batteries</button>
+                <button id="btn-go-to-step-4" class="action-btn">
+                    Plan Implementation <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- STEP 4: IMPLEMENTATION & INCENTIVES -->
+        <section id="step-4" class="wizard-step">
+            <div class="step-header">
+                <span class="step-badge">Step 4 of 4</span>
+                <h2>Ontario Implementation & Savings Plan</h2>
+                <p>Maximize your return on investment by selecting certified local energy savings partners and applying for official provincial rebates.</p>
+            </div>
+
+            <!-- Ontario Incentives & Energy Partners Grid -->
+            <div class="roi-details-grid mt-md">
+                <!-- Ontario Incentives -->
+                <div class="glass-card">
+                    <h3><i class="fa-solid fa-hand-holding-dollar text-teal"></i> Ontario Rebates & Incentives</h3>
+                    <p class="section-desc mt-sm">Offset the upfront hardware costs of your home battery using available federal, provincial, or municipal funding programs:</p>
+                    <ul class="strategy-list mt-md">
+                        <li>
+                            <i class="fa-solid fa-sun text-teal"></i>
+                            <div>
+                                <strong>Save on Energy (HRS Program):</strong>
+                                <p>Get up to $5,000 rebate ($300/kWh) when pairing battery storage with a new solar installation. <a href="https://saveonenergy.ca" target="_blank" class="text-link">Visit Program Page <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem;"></i></a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-house text-purple"></i>
+                            <div>
+                                <strong>Municipal PACE Loans:</strong>
+                                <p>Access low-interest financing through local programs (e.g., Toronto HELP, Durham Greener Homes) and pay it back via your property tax bill. <a href="https://www.toronto.ca" target="_blank" class="text-link">Learn More <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem;"></i></a></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Energy Savings Partners -->
+                <div class="glass-card">
+                    <h3><i class="fa-solid fa-handshake text-purple"></i> Energy Savings Partners</h3>
+                    <p class="section-desc mt-sm">Work with certified installers to handle your system setup, municipal permits, and incentive applications:</p>
+                    <ul class="strategy-list mt-md">
+                        <li>
+                            <i class="fa-solid fa-circle-check text-teal"></i>
+                            <div>
+                                <strong>Ontario GreenPower Solutions:</strong>
+                                <p>Certified solar-battery installation technicians and Save on Energy program filing experts.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle-check text-purple"></i>
+                            <div>
+                                <strong>VoltCharge Systems Canada:</strong>
+                                <p>Accredited Tesla Powerwall & Enphase installer group specializing in smart panel integrations.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle-check text-blue"></i>
+                            <div>
+                                <strong>EcoSolar Durham:</strong>
+                                <p>Regional installers providing full municipal PACE financing application assistance.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="navigation-buttons flex-row justify-between">
+                <button class="btn-back text-btn" id="btn-back-to-step-3"><i class="fa-solid fa-arrow-left"></i> Back to ROI Analysis</button>
+                <button id="btn-recalculate" class="action-btn btn-secondary">
+                    <i class="fa-solid fa-rotate-left"></i> Start New Simulation
+                </button>
+            </div>
+        </section>
+
+        <!-- Informative section visible at bottom -->
+        <section class="grid-details-row">
+            <div class="glass-card info-card">
+                <h2><i class="fa-solid fa-clock text-amber"></i> Ontario ULO Rate Structure</h2>
+                <p class="info-desc">VoltShift targets the 10x price ratio between Overnight and On-Peak periods to maximize arbitrage yields.</p>
+                
+                <div class="rate-table">
+                    <div class="rate-row">
+                        <span class="rate-badge ulo-overnight">ULO Overnight</span>
+                        <span class="rate-hours">11:00 PM – 7:00 AM (Daily)</span>
+                        <span class="rate-price">3.9 ¢ / kWh</span>
+                    </div>
+                    <div class="rate-row">
+                        <span class="rate-badge ulo-weekend">Weekend Off-Peak</span>
+                        <span class="rate-hours">7:00 AM – 11:00 PM (Weekends/Holidays)</span>
+                        <span class="rate-price">9.8 ¢ / kWh</span>
+                    </div>
+                    <div class="rate-row">
+                        <span class="rate-badge ulo-mid">Mid-Peak</span>
+                        <span class="rate-hours">7:00 AM – 4:00 PM & 9:00 PM – 11:00 PM (Weekdays)</span>
+                        <span class="rate-price">15.7 ¢ / kWh</span>
+                    </div>
+                    <div class="rate-row">
+                        <span class="rate-badge ulo-on">On-Peak</span>
+                        <span class="rate-hours">4:00 PM – 9:00 PM (Weekdays)</span>
+                        <span class="rate-price">39.1 ¢ / kWh</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card info-card">
+                <h2><i class="fa-solid fa-circle-info text-blue"></i> ULO Arbitrage Strategy</h2>
+                <ul class="strategy-list">
+                    <li>
+                        <i class="fa-solid fa-bolt text-teal"></i>
+                        <div>
+                            <strong>Smart Overnight Charging:</strong>
+                            <p>The system charges your battery from the grid between 11 PM and 7 AM at Ontario's lowest rate (3.9¢/kWh).</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-arrow-trend-down text-rose"></i>
+                        <div>
+                            <strong>On-Peak Offsetting:</strong>
+                            <p>During the weekday peak window (4 PM - 9 PM), the battery discharges to cover home consumption, bypassing the 39.1¢/kWh rate.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-leaf text-green"></i>
+                        <div>
+                            <strong>Carbon Reduction:</strong>
+                            <p>Reduces strain on Ontario's peaking natural gas plants, lowering overall grid emissions.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Application Script -->
+    <script src="app.js"></script>
+</body>
+</html>
