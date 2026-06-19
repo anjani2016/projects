@@ -128,6 +128,91 @@ class BandInspectionOrchestrator:
         if not report_id:
             report_id = self.db_adapter.generate_report_id()
 
+        # ── Optional: Run on the real Band platform if credentials are available ──
+        vision_api_key = "band_a_1781322816_54qViPCv731l_WLo8EXXnYohhztSvsMt"
+        orchestrator_agent_id = "b0c1269c-4d84-4e4a-806c-9941ab848986"
+        compliance_agent_id = "b65bb3b0-5e8e-4466-8a5c-7c406402505f"
+        review_agent_id = "027c7f2f-cd79-4450-990d-8f6b2d2e4b12"
+
+        try:
+            from band.client.rest import RestClient
+            from thenvoi_rest.types import ChatRoomRequest, ParticipantRequest, ChatMessageRequest
+            from thenvoi_rest.types.chat_message_request import ChatMessageRequestMentionsItem
+
+            logger.info("[Orchestrator] Attempting native execution on Band.ai platform...")
+            client = RestClient(api_key=vision_api_key, base_url='https://app.band.ai')
+
+            # Create a shared room
+            room = client.agent_api_chats.create_agent_chat(chat=ChatRoomRequest(task_id=None))
+            chat_id = room.data.id
+            logger.info(f"[Orchestrator] Created Band chat room: {chat_id}")
+
+            # Add participants
+            client.agent_api_participants.add_agent_chat_participant(chat_id, participant=ParticipantRequest(participant_id=orchestrator_agent_id, role='member'))
+            client.agent_api_participants.add_agent_chat_participant(chat_id, participant=ParticipantRequest(participant_id=compliance_agent_id, role='member'))
+            client.agent_api_participants.add_agent_chat_participant(chat_id, participant=ParticipantRequest(participant_id=review_agent_id, role='member'))
+            logger.info("[Orchestrator] Added Orchestrator, Compliance, and Review agents to the room.")
+
+            # Send trigger message mentioning the orchestrator
+            payload = {
+                "report_id": report_id,
+                "image_path": image_path,
+                "image_hash": image_hash,
+                "thickness": thickness,
+                "model_path": model_path,
+                "app_type": app_type,
+                "material": material,
+                "regulatory_code": regulatory_code,
+                "client_spec": client_spec,
+                "other_standard": other_standard,
+                "usage": usage,
+                "raw_image_path": raw_image_path,
+                "annotated_image_path": annotated_image_path
+            }
+            content = f"@anjani.duddukuru/weld-orchestrator Start weld NDT inspection: {json.dumps(payload)}"
+            mention = ChatMessageRequestMentionsItem(id=orchestrator_agent_id, handle='@anjani.duddukuru/weld-orchestrator', name='Weld Orchestrator')
+            
+            client.agent_api_messages.create_agent_chat_message(chat_id, message=ChatMessageRequest(content=content, mentions=[mention]))
+            logger.info("[Orchestrator] Trigger message sent. Polling for final verdict...")
+
+            # Poll for final verdict
+            import time
+            start_time = time.time()
+            timeout_sec = 60.0
+            verdict_message = None
+
+            while time.time() - start_time < timeout_sec:
+                await asyncio.sleep(2.0)
+                messages = client.agent_api_messages.list_agent_messages(chat_id)
+                for msg in messages.data:
+                    if msg.participant.id == orchestrator_agent_id:
+                        try:
+                            # Try to find a JSON payload in the message
+                            # In case there's markdown wrapping, clean it up
+                            text = msg.content.strip()
+                            if text.startswith("```json"):
+                                text = text[7:]
+                            if text.endswith("```"):
+                                text = text[:-3]
+                            text = text.strip()
+                            
+                            data = json.loads(text)
+                            if isinstance(data, dict) and data.get("agent") == "weld-orchestrator-agent" and data.get("status") == "complete":
+                                verdict_message = data
+                                break
+                        except json.JSONDecodeError:
+                            pass
+                if verdict_message:
+                    break
+
+            if verdict_message:
+                logger.info("[Orchestrator] Native Band execution completed successfully.")
+                return verdict_message
+            else:
+                logger.warning("[Orchestrator] Polling for response timed out. Falling back to local execution.")
+        except Exception as exc:
+            logger.warning(f"[Orchestrator] Native Band execution failed: {exc}. Falling back to local execution.")
+
         # ── Step 1: Audit start ────────────────────────────────────────────────
         self.db_adapter.log_audit_event({
             "event_type": "BAND_INSPECTION_START",
