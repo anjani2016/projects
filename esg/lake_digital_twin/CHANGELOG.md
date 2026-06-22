@@ -1,5 +1,12 @@
 # Changelog - Lake Digital Twin
 
+## [v2.3] - 2026-06-22
+### Added
+- **Inspection Alerts Engine**: Created `models/inspection_engine.py` to evaluate composite risk criteria (runoff, stratification, satellite spikes) and trigger alerts.
+- **Inspection Center View**: Added `views/5_Inspection_Alerts.py` featuring interactive simulation inputs and field team dispatch cards.
+- **Gemini AI Integration**: Implemented live Gemini API requests for generating environmental briefs.
+- **Interactive Workflow**: Realigned the Project Charter (`views/1_Project_Charter.py`) into a clean workflow representation using native Streamlit containers.
+
 ## [v2.2] - 2026-05-03
 ### Added
 - **Project Charter**: New page `1_Project_Charter.py` added to the Overview section.
