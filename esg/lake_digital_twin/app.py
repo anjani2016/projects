@@ -25,17 +25,27 @@ import os
 
 st.set_page_config(page_title="🌊 Lake Health Digital Twin", layout="wide")
 
+# Initialize session state defaults on first load
+if "selected_lake" not in st.session_state:
+    st.session_state["selected_lake"] = None
+if "selected_lake_name" not in st.session_state:
+    st.session_state["selected_lake_name"] = None
+
 # Define your pages organized by section
 pages = {
     "Overview": [
         st.Page("views/0_Main_Dashboard.py", title="Main Dashboard", icon=":material/dashboard:", default=True),
         st.Page("views/1_Project_Charter.py", title="Project Charter", icon=":material/description:"),
     ],
+    "Location": [
+        st.Page("views/4_Lake_Selector.py", title="Lake Selector", icon=":material/map:"),
+    ],
     "Field Operations": [
         st.Page("views/2_Field_Entry.py", title="Volunteer Field Entry", icon=":material/edit_location:")
     ],
     "Risk Analysis": [
-        st.Page("views/3_Monte_Carlo_Sim.py", title="Predictive Risk Model", icon=":material/analytics:")
+        st.Page("views/3_Monte_Carlo_Sim.py", title="Predictive Risk Model", icon=":material/analytics:"),
+        st.Page("views/5_Inspection_Alerts.py", title="Inspection Center", icon=":material/notification_important:")
     ]
 }
 

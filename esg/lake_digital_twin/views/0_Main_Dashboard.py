@@ -8,20 +8,36 @@ from models.chemical_engine import calculate_saturation_index, simulate_lake_sta
 
 st.title("🌊 Lake Health Dashboard")
 
+# ── Lake Context Banner ───────────────────────────────────────────────────────
+selected_lake = st.session_state.get("selected_lake")
+if selected_lake:
+    trophic_icon = {"Oligotrophic": "🔵", "Mesotrophic": "🟢", "Eutrophic": "🔴"}.get(selected_lake["trophic_state"], "⚪")
+    st.info(
+        f"{trophic_icon} **Analysing: {selected_lake['name']}** — "
+        f"{selected_lake['trophic_state']} | {selected_lake['conservation_authority']} | "
+        f"Max Depth: {selected_lake['max_depth_m']} m | Catchment: {selected_lake['catchment_area_km2']} km²"
+    )
+else:
+    st.warning("No lake selected. Go to **Location → Lake Selector** to pick an Ontario lake, or adjust parameters manually below.")
+
+# Use lake defaults where available, otherwise use hardcoded defaults
+_default_agri = selected_lake['agri_pct'] if selected_lake else 30
+_default_ph = selected_lake['ph_baseline'] if selected_lake else 8.1
+_default_ca = selected_lake['ca_baseline'] if selected_lake else 40.0
+
 # Initialize session state for Phosphorus if not exists
 if 'tp' not in st.session_state:
-    st.session_state['tp'] = 0.025
+    st.session_state['tp'] = selected_lake['tp_baseline'] if selected_lake else 0.025
 
 # Sidebar for Project Inputs
 with st.sidebar.expander("Project Parameters"):
     rainfall = st.slider("Rainfall Event (mm)", 0, 150, 25)
-    agri_land = st.slider("Agricultural Land (%)", 0, 100, 30)
+    agri_land = st.slider("Agricultural Land (%)", 0, 100, _default_agri)
     st.markdown("---")
 
 with st.sidebar.expander("Water Chemistry"):
-    # st.subheader("Water Chemistry")
-    ph = st.slider("pH Level", 6.5, 9.5, 8.1)
-    ca = st.number_input("Calcium (mg/L)", value=40.0)
+    ph = st.slider("pH Level", 6.5, 9.5, _default_ph)
+    ca = st.number_input("Calcium (mg/L)", value=_default_ca)
     # Use session state for Phosphorus value
     tp = st.number_input("Total Phosphorus (mg/L)", value=st.session_state['tp'], format="%.3f")
 
