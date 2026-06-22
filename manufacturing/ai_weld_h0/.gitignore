@@ -1,0 +1,40 @@
+# Virtual environment
+weld_env/
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs and runtime
+logs/
+runs/
+azure_logs/
+
+# OS artifacts
+.DS_Store
+
+# Secrets – never commit
+.env
+
+# Build artifacts
+mermaid-filter.err
+
+# Large binary files
+*.zip
+*.db
+
+# Model weights – ignore everything in weights/ EXCEPT the two kept models
+weights/*
+!weights/hf_weld_rtdetr_final/
+!weights/hf_weld_rtdetr_final/**
+!weights/m60.pt
+
+# Ignore entire models/ directory (pre-training checkpoints)
+models/
+
+# Data – local only
+data/
+
+# Rules – local only
+rules/

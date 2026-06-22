@@ -1,0 +1,29 @@
+# Computer Vision & AI
+ultralytics
+opencv-python-headless
+torch
+huggingface_hub
+transformers
+numpy
+pandas
+grad-cam
+matplotlib
+
+# API & Backend
+fastapi
+uvicorn
+python-multipart
+requests
+pydantic
+python-dotenv
+
+# AWS
+boto3
+
+# Reporting
+reportlab
+fpdf2
+
+# Testing
+pytest
+pytest-asyncio
