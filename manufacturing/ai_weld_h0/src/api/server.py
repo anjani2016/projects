@@ -18,6 +18,25 @@ from fastapi.staticfiles import StaticFiles
 
 load_dotenv()
 
+def get_db_adapter():
+    # If in unit test mode, force MongoAdapter (SQLite mock)
+    import sys
+    if "pytest" in sys.modules or os.environ.get("MONGODB_URI", "").startswith("mcp://"):
+        mcp_url = os.environ.get("MONGODB_URI", "")
+        return MongoAdapter(mcp_url)
+
+    aws_key = os.environ.get("AWS_ACCESS_KEY_ID")
+    aws_secret = os.environ.get("AWS_SECRET_ACCESS_KEY")
+    if aws_key and aws_secret:
+        try:
+            from src.infrastructure.adapters.dynamo_adapter import DynamoDBAdapter
+            return DynamoDBAdapter()
+        except Exception as e:
+            logging.warning(f"Failed to initialize DynamoDBAdapter: {e}. Falling back to Mongo/SQLite.")
+            
+    mcp_url = os.environ.get("MONGODB_URI", "")
+    return MongoAdapter(mcp_url)
+
 app = FastAPI(title="AI Weld Inspector Backend", version="1.0.0")
 
 # Enable CORS for frontend flexibility
@@ -63,8 +82,7 @@ async def inspect_weld(
     if gemini_api_key:
         os.environ["GEMINI_API_KEY"] = gemini_api_key
         
-    mcp_url = os.environ.get("MONGODB_URI", "")
-    db_adapter = MongoAdapter(mcp_url)
+    db_adapter = get_db_adapter()
     
     # Compute SHA-256 image hash
     file.file.seek(0)
@@ -323,9 +341,8 @@ async def get_records(x_user_role: str = Header("Inspector")):
     """
     Fetches all saved NDT reports from the database adapter.
     """
-    mcp_url = os.environ.get("MONGODB_URI", "")
     try:
-        db_adapter = MongoAdapter(mcp_url)
+        db_adapter = get_db_adapter()
         # Log Audit event
         db_adapter.log_audit_event({
             "user_id": x_user_role,
@@ -345,8 +362,7 @@ async def clear_records(x_user_role: str = Header("Inspector")):
     """
     # RBAC authorization gate
     if x_user_role not in ["Admin", "Auditor"]:
-        mcp_url = os.environ.get("MONGODB_URI", "")
-        db_adapter = MongoAdapter(mcp_url)
+        db_adapter = get_db_adapter()
         db_adapter.log_audit_event({
             "user_id": x_user_role,
             "action": "UNAUTHORIZED_CLEAR_ATTEMPT",
@@ -354,9 +370,8 @@ async def clear_records(x_user_role: str = Header("Inspector")):
         })
         raise HTTPException(status_code=403, detail="Role unauthorized to perform this operation.")
 
-    mcp_url = os.environ.get("MONGODB_URI", "")
     try:
-        db_adapter = MongoAdapter(mcp_url)
+        db_adapter = get_db_adapter()
         # Log Audit event
         db_adapter.log_audit_event({
             "user_id": x_user_role,
@@ -379,8 +394,7 @@ async def submit_feedback(
     Submits performer remarks or supervisor review, updates workflow state,
     and regenerates the signed PDF report dynamically.
     """
-    mcp_url = os.environ.get("MONGODB_URI", "")
-    db_adapter = MongoAdapter(mcp_url)
+    db_adapter = get_db_adapter()
     
     # 1. Fetch record from database
     record = db_adapter.get_record_by_report_id(report_id)

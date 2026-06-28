@@ -12,8 +12,10 @@ Table design (single-table pattern):
     PK="AUDIT#<uuid>"                 SK="AUDIT"
     PK="STANDARD#<standard_id>"       SK="STANDARD"
 
-Fallback: if AWS credentials are not configured, the adapter raises
-ImportError at import time so server.py can fall back to the SQLite adapter.
+Credential resolution (three-tier, automatic):
+  1. Vercel Marketplace OIDC  — VERCEL_OIDC_TOKEN + AWS_ROLE_ARN (no static keys)
+  2. Static IAM keys          — AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY
+  3. Default boto3 session    — ~/.aws/credentials or EC2/ECS instance role
 """
 
 import os
@@ -35,6 +37,45 @@ TABLE_NAME = os.getenv("DYNAMODB_TABLE_NAME", "weld-inspections")
 AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
 
 
+def _resolve_boto3_session() -> boto3.Session:
+    """
+    Resolve AWS credentials in priority order:
+      1. Vercel Marketplace OIDC  (VERCEL_OIDC_TOKEN + AWS_ROLE_ARN)
+      2. Static IAM keys          (AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY)
+      3. Default boto3 chain      (~/.aws/credentials, instance role, etc.)
+    """
+    oidc_token = os.getenv("VERCEL_OIDC_TOKEN")
+    role_arn = os.getenv("AWS_ROLE_ARN")
+
+    # ── Tier 1: Vercel OIDC ──────────────────────────────────────────────────
+    if oidc_token and role_arn:
+        sts = boto3.client("sts", region_name=AWS_REGION)
+        assumed = sts.assume_role_with_web_identity(
+            RoleArn=role_arn,
+            RoleSessionName="vercel-python-oidc",
+            WebIdentityToken=oidc_token,
+        )["Credentials"]
+        return boto3.Session(
+            aws_access_key_id=assumed["AccessKeyId"],
+            aws_secret_access_key=assumed["SecretAccessKey"],
+            aws_session_token=assumed["SessionToken"],
+            region_name=AWS_REGION,
+        )
+
+    # ── Tier 2: Static IAM keys ──────────────────────────────────────────────
+    access_key = os.getenv("AWS_ACCESS_KEY_ID")
+    secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+    if access_key and secret_key and access_key != "your_access_key_here":
+        return boto3.Session(
+            aws_access_key_id=access_key,
+            aws_secret_access_key=secret_key,
+            region_name=AWS_REGION,
+        )
+
+    # ── Tier 3: Default boto3 chain (local ~/.aws, EC2/ECS instance role) ───
+    return boto3.Session(region_name=AWS_REGION)
+
+
 def _record_to_item(record: InspectionRecord) -> Dict[str, Any]:
     """Serialize an InspectionRecord to a DynamoDB item dict."""
     item = record.__dict__.copy()
@@ -53,14 +94,16 @@ def _item_to_record(item: Dict[str, Any]) -> InspectionRecord:
 
 
 class DynamoDBAdapter(DatabasePort):
-    """AWS DynamoDB implementation of DatabasePort (single-table design)."""
+    """AWS DynamoDB implementation of DatabasePort (single-table design).
+
+    Credentials are resolved automatically via _resolve_boto3_session():
+      Tier 1 → Vercel OIDC  (Vercel Marketplace integration)
+      Tier 2 → Static keys  (AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY)
+      Tier 3 → Default boto3 chain (~/.aws, instance role)
+    """
 
     def __init__(self) -> None:
-        session = boto3.Session(
-            aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-            aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
-            region_name=AWS_REGION,
-        )
+        session = _resolve_boto3_session()
         dynamodb = session.resource("dynamodb")
         self.table = dynamodb.Table(TABLE_NAME)
         # Validate connection on startup
@@ -212,3 +255,18 @@ class DynamoDBAdapter(DatabasePort):
             Key={"PK": f"STANDARD#{standard_id}", "SK": "STANDARD"}
         )
         return response.get("Item")
+
+    def clear_records(self) -> None:
+        """Scan and delete all items from the DynamoDB table."""
+        try:
+            scan = self.table.scan()
+            with self.table.batch_writer() as batch:
+                for each in scan.get("Items", []):
+                    batch.delete_item(
+                        Key={
+                            "PK": each["PK"],
+                            "SK": each["SK"]
+                        }
+                    )
+        except Exception as e:
+            raise RuntimeError(f"Failed to clear DynamoDB table: {e}")
