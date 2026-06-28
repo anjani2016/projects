@@ -54,6 +54,12 @@ async def inspect_weld(
     Receives an image and inspection parameters, runs the AI multi-agent orchestrator,
     and returns the verdict, text output, and base64-encoded annotated image.
     """
+    # Map frontend model dropdown values to actual backend weight paths
+    if "rt-detr" in model_path.lower():
+        model_path = "weights/hf_weld_rtdetr_final"
+    elif "m60" in model_path.lower():
+        model_path = "weights/m60.pt"
+
     if gemini_api_key:
         os.environ["GEMINI_API_KEY"] = gemini_api_key
         
@@ -102,18 +108,22 @@ async def inspect_weld(
         orchestrator.annotated_image_path = f"annotated/{report_id}.jpg"
         
         # 5. Run the agent workflow
-        agent_output = await orchestrator.run(
-            raw_storage_path, 
-            model_path, 
-            thickness, 
-            image_hash=image_hash,
-            app_type=app_type,
-            material=material,
-            regulatory_code=regulatory_code,
-            client_spec=client_spec,
-            other_standard=other_standard,
-            usage=usage
-        )
+        try:
+            agent_output = await orchestrator.run(
+                raw_storage_path, 
+                model_path, 
+                thickness, 
+                image_hash=image_hash,
+                app_type=app_type,
+                material=material,
+                regulatory_code=regulatory_code,
+                client_spec=client_spec,
+                other_standard=other_standard,
+                usage=usage
+            )
+        except Exception as run_err:
+            logging.warning(f"Orchestrator run failed, falling back to rule engine: {run_err}")
+            agent_output = f"Error during agent execution: {str(run_err)}"
         
         # 6. Detect defects to build annotations (leveraging vision cache)
         defects = vision_adapter.detect(enhanced_img, image_hash=image_hash)
@@ -283,7 +293,10 @@ async def inspect_weld(
         return {
             "status": "success",
             "report_id": report_id,
-            "result": agent_output,
+            "result": {
+                "verdict": "PASS" if "STATUS: PASS" in agent_output else "REJECT",
+                "reasoning": agent_output
+            },
             "annotated_image": img_b64,
             "defects": [d.model_dump() for d in defects]
         }
@@ -378,11 +391,11 @@ async def submit_feedback(
     if role.lower() == "performer":
         record.performer_comments = comments
         record.status_state = 1
-    elif role.lower() == "supervisor":
+    elif role.lower() in ("supervisor", "admin"):
         record.supervisor_comments = comments
         record.status_state = 2
     else:
-        raise HTTPException(status_code=400, detail="Invalid role. Must be 'performer' or 'supervisor'.")
+        raise HTTPException(status_code=400, detail="Invalid role. Must be 'performer', 'supervisor', or 'admin'.")
         
     # 3. Save updated record back to DB
     db_adapter.update_record(record)
