@@ -1,0 +1,25 @@
+# Ignore the virtual environment
+weld_env/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Data, Logs, and Models
+models/
+weights/
+data/
+azure_logs/
+logs/
+runs/
+rules/
+*.zip
+*.pt
+*.safetensors
+.DS_Store
+.env
+hackathon.md
+google_startups_challenge.md
+google_cloud_rapid_agent_hackathon.md
+explain.md
+feedback.md
