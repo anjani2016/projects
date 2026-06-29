@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RT Image Metadata Schema",
+  "type": "object",
+  "properties": {
+    "image_id": { "type": "string" },
+    "stream": { "type": "string", "enum": ["piping", "pipeline", "structural", "castings"] },
+    "welding_process": { "type": "string" },
+    "material": { "type": "string" },
+    "iqi_detected": { "type": "boolean" },
+    "iqi_wire_number": { "type": "integer" },
+    "pixel_to_mm_scale": { "type": "number" },
+    "environment": { "type": "string" },
+    "temperature": { "type": "number" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "operator_id": { "type": "string" },
+    "inspector_id": { "type": "string" },
+    "client": { "type": "string" },
+    "weld_procedure": { "type": "string" },
+    "ndt_corroboration": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "regulatory_code": { "type": "string" },
+    "defects_detected": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string" },
+          "bbox": {
+            "type": "array",
+            "items": { "type": "number" },
+            "minItems": 4,
+            "maxItems": 4
+          },
+          "size_mm": { "type": "number" },
+          "acceptance_status": { "type": "string" }
+        }
+      }
+    }
+  },
+  "required": ["image_id", "stream", "timestamp", "regulatory_code"]
+}

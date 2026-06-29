@@ -1,0 +1,14 @@
+# Generic virtual environments
+venv/
+.venv/
+env/
+
+# YOUR specific folder name (if different)
+risk_env/
+
+# Secrets
+.env
+
+# Python internals
+__pycache__/
+*.pyc

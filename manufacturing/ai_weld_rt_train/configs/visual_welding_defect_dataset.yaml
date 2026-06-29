@@ -1,0 +1,18 @@
+# configs/visual_welding_defect_dataset.yaml
+# Dataset: Visual Welding Defect Dataset
+# Classes: ['Bad Weld', 'Good Weld', 'Defect']
+
+path: /Users/anjanid/projects/manufacturing/ai_weld_rt_train/data/visual_welding_defect_dataset
+
+train: train/images
+val: val/images
+test: test/images
+
+# Number of classes
+nc: 3
+
+# Class names
+names:
+  0: Bad Weld
+  1: Good Weld
+  2: Defect

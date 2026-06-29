@@ -1,0 +1,9 @@
+streamlit
+folium
+streamlit-folium
+pandas
+requests
+numpy
+shapely
+python-dotenv
+pytest

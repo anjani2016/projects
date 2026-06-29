@@ -1,20 +1,4 @@
-# Vercel-only requirements — lightweight, no PyTorch/CV
-# Total install size: ~80 MB (well under 500 MB limit)
-
-# API & web
-fastapi
-uvicorn
-python-multipart
-pydantic
-python-dotenv
-requests
-
-# AWS DynamoDB
-boto3
-
-# Reporting (PDF generation, no CV deps)
-reportlab
-fpdf2
-
-# Google AI (Gemini — text only, no vision models)
-google-genai
+-r manufacturing/ai_weld_rt_train/requirements.txt
+-r esg/tracy_arm_flord_landslide/requirements.txt
+-r energy/ontario_grid_twin/requirements.txt
+-r manufacturing/ai_weld_uipath/requirements.txt

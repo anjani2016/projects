@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                  xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" 
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" 
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI" 
+                  id="Definitions_WeldInspection" 
+                  targetNamespace="http://bpmn.io/schema/bpmn" 
+                  exporter="Camunda Modeler" 
+                  exporterVersion="4.6.0">
+  <bpmn:process id="Process_Weld_Inspection" name="Weld Quality Maestro" isExecutable="true">
+    
+    <!-- 1. Start Event -->
+    <bpmn:startEvent id="StartEvent_Ingest" name="Radiograph Ingested">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    
+    <!-- 2. AI Scan Service Task -->
+    <bpmn:serviceTask id="Activity_AIScan" name="AI Scan &#38; ASME Audit">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:incoming>Flow_LoopBack</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_Ingest" targetRef="Activity_AIScan" />
+    
+    <!-- 3. Defects Exclusive Gateway -->
+    <bpmn:exclusiveGateway id="Gateway_Defects" name="Defects Detected?">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_Pass</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Fail</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Activity_AIScan" targetRef="Gateway_Defects" />
+    
+    <!-- 4. Level III Human Review User Task -->
+    <bpmn:userTask id="Activity_HumanReview" name="Level III NDT Review">
+      <bpmn:incoming>Flow_Fail</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_Fail" name="Yes (Fail / Exception)" sourceRef="Gateway_Defects" targetRef="Activity_HumanReview" />
+    
+    <!-- 5. Inspector Decision Gateway -->
+    <bpmn:exclusiveGateway id="Gateway_Inspector" name="Inspector Decision?">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_Approve</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Reject</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Activity_HumanReview" targetRef="Gateway_Inspector" />
+    
+    <!-- 6. Agentic Repair Planning Service Task -->
+    <bpmn:serviceTask id="Activity_RepairPlan" name="Agentic Repair Planning">
+      <bpmn:incoming>Flow_Reject</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_Reject" name="Reject" sourceRef="Gateway_Inspector" targetRef="Activity_RepairPlan" />
+    
+    <!-- 7. Welder Rework User Task -->
+    <bpmn:userTask id="Activity_WelderRework" name="Welder Rework">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_LoopBack</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Activity_RepairPlan" targetRef="Activity_WelderRework" />
+    <bpmn:sequenceFlow id="Flow_LoopBack" name="Upload Repair Scan" sourceRef="Activity_WelderRework" targetRef="Activity_AIScan" />
+    
+    <!-- 8. Export Certificate Service Task -->
+    <bpmn:serviceTask id="Activity_ExportCert" name="Export Certificate">
+      <bpmn:incoming>Flow_Pass</bpmn:incoming>
+      <bpmn:incoming>Flow_Approve</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_Pass" name="No (Pass)" sourceRef="Gateway_Defects" targetRef="Activity_ExportCert" />
+    <bpmn:sequenceFlow id="Flow_Approve" name="Approve Override" sourceRef="Gateway_Inspector" targetRef="Activity_ExportCert" />
+    
+    <!-- 9. End Event -->
+    <bpmn:endEvent id="EndEvent_Complete" name="Inspection Closed">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Activity_ExportCert" targetRef="EndEvent_Complete" />
+    
+  </bpmn:process>
+  
+  <!-- Visual layout coordinates (BPMN Edge and Node placements) -->
+  <bpmndi:BPMNDiagram id="BPMNDiagram_WeldInspection">
+    <bpmndi:BPMNPlane id="BPMNPlane_WeldInspection" bpmnElement="Process_Weld_Inspection">
+      
+      <!-- Nodes -->
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent" bpmnElement="StartEvent_Ingest">
+        <dc:Bounds x="150" y="100" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Activity_AIScan_di" bpmnElement="Activity_AIScan">
+        <dc:Bounds x="240" y="78" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Gateway_Defects_di" bpmnElement="Gateway_Defects" isMarkerVisible="true">
+        <dc:Bounds x="390" y="93" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Activity_HumanReview_di" bpmnElement="Activity_HumanReview">
+        <dc:Bounds x="490" y="78" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Gateway_Inspector_di" bpmnElement="Gateway_Inspector" isMarkerVisible="true">
+        <dc:Bounds x="640" y="93" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Activity_RepairPlan_di" bpmnElement="Activity_RepairPlan">
+        <dc:Bounds x="740" y="78" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Activity_WelderRework_di" bpmnElement="Activity_WelderRework">
+        <dc:Bounds x="740" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Activity_ExportCert_di" bpmnElement="Activity_ExportCert">
+        <dc:Bounds x="365" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="EndEvent_Complete_di" bpmnElement="EndEvent_Complete">
+        <dc:Bounds x="512" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      
+      <!-- Edges -->
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="186" y="118" />
+        <di:waypoint x="240" y="118" />
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="340" y="118" />
+        <di:waypoint x="390" y="118" />
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Flow_Fail_di" bpmnElement="Flow_Fail">
+        <di:waypoint x="440" y="118" />
+        <di:waypoint x="490" y="118" />
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="590" y="118" />
+        <di:waypoint x="640" y="118" />
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Flow_Reject_di" bpmnElement="Flow_Reject">
+        <di:waypoint x="690" y="118" />
+        <di:waypoint x="740" y="118" />
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="790" y="158" />
+        <di:waypoint x="790" y="220" />
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Flow_LoopBack_di" bpmnElement="Flow_LoopBack">
+        <di:waypoint x="740" y="260" />
+        <di:waypoint x="290" y="260" />
+        <di:waypoint x="290" y="158" />
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Flow_Pass_di" bpmnElement="Flow_Pass">
+        <di:waypoint x="415" y="143" />
+        <di:waypoint x="415" y="220" />
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Flow_Approve_di" bpmnElement="Flow_Approve">
+        <di:waypoint x="665" y="143" />
+        <di:waypoint x="665" y="180" />
+        <di:waypoint x="445" y="180" />
+        <di:waypoint x="445" y="220" />
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="465" y="260" />
+        <di:waypoint x="512" y="260" />
+      </bpmndi:BPMNEdge>
+      
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

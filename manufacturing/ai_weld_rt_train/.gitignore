@@ -1,0 +1,19 @@
+# Ignore the virtual environment
+weld_ai_env/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Data, Logs, and Models
+models/
+weights/
+data/
+azure_logs/
+logs/
+runs/
+rules/
+*.zip
+*.pt
+*.safetensors
+.DS_Store

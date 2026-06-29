@@ -1,0 +1,11 @@
+ERESET	18.8
+USERDATA
+T	SETTING	1	Y	N	8.00	Y	N	Y
+T	PROJECT	proj_id	p6_id	project_name	status_code	plan_start_date	scd_end_date
+R	1	PROJ-01	Sample Monte Carlo Project	Active	2026-05-01 08:00:00	2026-05-20 17:00:00
+T	TASK	task_id	task_code	task_name	target_drtn_hr_cnt	proj_id
+R	101	T1000	Start Task	40.0	1
+R	102	T1010	End Task	80.0	1
+T	TASKPRED	pred_task_id	task_id	pred_type	proj_id
+R	101	102	PR_FS	1
+%E

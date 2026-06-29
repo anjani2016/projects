@@ -1,0 +1,126 @@
+{
+  "2023": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:49:16.101428"
+  },
+  "2021": {
+    "source": "synthetic",
+    "cached_at": "2026-05-23T18:03:03.502797"
+  },
+  "2022": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:43.474947"
+  },
+  "2024": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:45.454970"
+  },
+  "2025": {
+    "source": "synthetic",
+    "cached_at": "2026-05-23T09:50:56.365798"
+  },
+  "2026": {
+    "source": "synthetic",
+    "cached_at": "2026-05-23T09:50:56.410593"
+  },
+  "1996": {
+    "source": "synthetic",
+    "cached_at": "2026-05-23T09:51:04.354751"
+  },
+  "1997": {
+    "source": "synthetic",
+    "cached_at": "2026-05-23T09:51:04.409999"
+  },
+  "1998": {
+    "source": "synthetic",
+    "cached_at": "2026-05-23T09:51:04.457098"
+  },
+  "1999": {
+    "source": "synthetic",
+    "cached_at": "2026-05-23T09:51:04.504206"
+  },
+  "2000": {
+    "source": "synthetic",
+    "cached_at": "2026-05-23T09:51:04.551789"
+  },
+  "2001": {
+    "source": "synthetic",
+    "cached_at": "2026-05-23T09:51:04.599325"
+  },
+  "2002": {
+    "source": "synthetic",
+    "cached_at": "2026-05-23T09:51:04.647648"
+  },
+  "2003": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:07.317210"
+  },
+  "2004": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:13.479199"
+  },
+  "2005": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:15.394286"
+  },
+  "2006": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:17.146847"
+  },
+  "2007": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:18.651066"
+  },
+  "2008": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:20.158423"
+  },
+  "2009": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:21.664145"
+  },
+  "2010": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:23.853614"
+  },
+  "2011": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:25.513589"
+  },
+  "2012": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:27.032983"
+  },
+  "2013": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:28.741286"
+  },
+  "2014": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:30.441714"
+  },
+  "2015": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:31.999179"
+  },
+  "2016": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:33.533458"
+  },
+  "2017": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:35.173806"
+  },
+  "2018": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:36.772693"
+  },
+  "2019": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:38.672724"
+  },
+  "2020": {
+    "source": "ieso_api",
+    "cached_at": "2026-05-23T09:55:40.212116"
+  }
+}

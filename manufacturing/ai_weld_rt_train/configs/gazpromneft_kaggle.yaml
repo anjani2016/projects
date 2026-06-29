@@ -1,0 +1,30 @@
+# weld_config.yaml
+# Dataset: Radiographs Welding Defect Detection
+# Source: https://www.kaggle.com/datasets/viacheslavasadchiy/radiographs-welding-defect-detection
+# Origin: Gazpromneft Hackathon (Russia)
+# Model: m60.pt (author's official YOLO segmentation model, trained on this dataset)
+
+path: /Users/anjanid/projects/manufacturing/ai_weld_rt_train/data/gazpromneft_kaggle
+
+train: train/images
+val: val/images
+
+# Number of classes
+nc: 13
+
+# Class names — translated from Russian (original data card)
+# Russian original -> English translation
+names:
+  0: porosity              # Пора        — Gas pore / rounded void
+  1: inclusion             # Включение   — Slag or foreign material inclusion
+  2: undercut              # Подрез      — Groove melted into the base metal edge
+  3: burn_through          # Прожог      — Hole burned completely through the weld
+  4: crack                 # Трещина     — Linear fracture (zero tolerance in most standards)
+  5: overlap               # Наплыв      — Weld metal overflow beyond the joint boundary
+  6: reference_standard_1  # Эталон 1   — Calibration reference marker (IQI)
+  7: reference_standard_2  # Эталон 2   — Calibration reference marker (IQI)
+  8: reference_standard_3  # Эталон 3   — Calibration reference marker (IQI)
+  9: hidden_porosity        # Пора-скрытая — Sub-surface / hidden gas pore
+  10: crater               # Утяжина     — Shrinkage crater at weld termination
+  11: lack_of_fusion        # Несплавление — Incomplete fusion between weld passes
+  12: incomplete_root_penetration  # Непровар корня — Weld did not fully penetrate root

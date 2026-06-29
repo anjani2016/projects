@@ -1,0 +1,18 @@
+# --- Core Trading Libraries ---
+ib_async==2.1.0
+
+#<-- Comment out below line while I transition to ib_async 
+ib-insync==0.9.86  
+
+# --- Data Analysis ---
+pandas==2.3.3
+numpy==2.2.6
+
+# --- Web Scraping (Optional) ---
+beautifulsoup4==4.14.2 # Used for parsing news feeds
+lxml==6.0.2
+
+# Others
+
+# dataclasses==0.8; python_version < "3.7" - not needed for pyton version >3.7
+# deleted auto dependencies

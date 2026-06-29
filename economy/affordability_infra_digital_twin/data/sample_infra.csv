@@ -1,0 +1,11 @@
+city,latitude,longitude,affordability_index,infrastructure_cost,population,infrastructure_type
+Toronto,43.7001,-79.4163,0.45,150000000,2930000,Transit
+Ottawa,45.4215,-75.6972,0.68,85000000,994837,Water
+Mississauga,43.5890,-79.6441,0.52,65000000,721599,Transit
+Brampton,43.7315,-79.7624,0.49,55000000,593638,Energy
+Hamilton,43.2560,-79.8711,0.61,72000000,536917,Housing
+London,42.9849,-81.2453,0.73,45000000,383822,Energy
+Markham,43.8561,-79.3370,0.55,48000000,328966,Water
+Vaughan,43.8361,-79.4983,0.54,51000000,306233,Transit
+Kitchener,43.4516,-80.4925,0.70,39000000,233222,Housing
+Windsor,42.3149,-83.0364,0.78,32000000,217188,Energy

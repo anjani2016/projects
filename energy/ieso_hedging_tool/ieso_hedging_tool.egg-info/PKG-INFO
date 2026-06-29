@@ -1,0 +1,62 @@
+Metadata-Version: 2.4
+Name: ieso_hedging_tool
+Version: 0.1.0
+Summary: Financial Digital Twin for Ontario industrial energy consumers
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: streamlit
+Requires-Dist: plotly
+Requires-Dist: pandas
+Requires-Dist: numpy
+Requires-Dist: requests
+Requires-Dist: python-dotenv
+Requires-Dist: scipy
+
+# Project structure
+
+ieso_hedging_tool/
+├── .streamlit/                   # Streamlit UI configuration (themes, ports)
+├── data/                         # Local filesystem cache (optional/dev fallback)
+│   ├── raw/
+│   ├── processed/
+│   └── assets/
+│
+├── database/                     # Keep raw SQL isolated for migrations/tracking
+│   ├── schema/
+│   │   ├── 01_dimensions.sql
+│   │   └── 02_hypertables.sql
+│   ├── queries/
+│   │   ├── fetch_historical_volatility.sql
+│   │   ├── upsert_5min_demand.sql
+│   │   └── upsert_5min_lmp.sql
+│   └── views/
+│       └── 01_hourly_rollups.sql
+│
+├── src/                          # The Unified "Engine Room"
+│   ├── __init__.py               # Top-level namespace init
+│   │
+│   ├── core/                     # Infrastructure & Core Configuration
+│   │   ├── __init__.py
+│   │   ├── db_manager.py         # Handles connection pools & SQL readers
+│   │   └── utils.py              # Loggers, date-range formatters
+│   │
+│   ├── engines/                  # IESO Grid & Data Processing Engines
+│   │   ├── __init__.py
+│   │   ├── scraper.py            # Legacy/Raw HTML report fetcher
+│   │   ├── ingestion_peakhours.py# 5-Min/Hourly peak demand database ingestor
+│   │   └── forecasting.py        # ML / Real-time pricing models
+│   │
+│   └── finance/                  # Math, Quantitative & Risk Management Models
+│       ├── __init__.py
+│       ├── models.py             # Stochastic math (Ornstein-Uhlenbeck process)
+│       └── finance.py            # Financial derivatives (Black-Scholes, GA optimization)
+│
+├── pages/                        # Multi-page Presentation Layer (Imports from src/)
+│   ├── 1_📊_Market_Data.py
+│   ├── 2_📈_Simulations.py
+│   └── 3_💰_Hedging_Strategy.py
+│
+├── app.py                        # Streamlit Landing Page & Web entry point
+├── main.py                       # CLI Entrypoint (For backfills, cron tasks, headless execution)
+├── pyproject.toml                # Defines src/ as an installable local package
+└── README.md

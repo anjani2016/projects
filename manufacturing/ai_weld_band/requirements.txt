@@ -1,0 +1,30 @@
+ultralytics
+opencv-python-headless
+torch
+huggingface_hub
+transformers
+numpy
+pandas
+streamlit
+reportlab
+pydantic
+grad-cam
+matplotlib
+watchdog
+python-dotenv
+google-antigravity
+google-genai
+fastapi
+uvicorn
+python-multipart
+requests
+pymongo
+pytest
+pytest-asyncio
+fpdf2
+# Band of Agents SDK (band.ai hackathon) — pip package is 'band-sdk'
+# Module namespace is 'thenvoi' (from thenvoi import Agent, GoogleADKAdapter)
+# google_adk extra adds GoogleADKAdapter for Gemini 2.5 Flash/Pro via Google ADK
+band-sdk[google_adk]
+google-adk
+

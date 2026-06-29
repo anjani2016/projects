@@ -1,0 +1,7 @@
+weld_ai_env/
+.git/
+data/
+runs/
+*.pyc
+__pycache__/
+.DS_Store
